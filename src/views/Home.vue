@@ -21,6 +21,6 @@ export default {
 .Home {
   overflow: hidden;
   position: relative;
-  background-color: #bbbbbb;
+  background-color: rgb(193, 193, 193);
 }
 </style>

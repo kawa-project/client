@@ -19,7 +19,7 @@
           </v-btn>
         </div>
         {{ new Date().getFullYear() }} —
-        <strong>&copy;Kawa-Craft</strong>
+        <strong>&copy;Kawa.Craft</strong>
       </v-card-text>
     </v-card>
   </v-footer>

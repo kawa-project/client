@@ -15,7 +15,7 @@
               <span>Home</span>
             </v-btn>
 
-            <v-btn id="btn-menu" text>
+            <v-btn id="btn-menu" text @click.prevent="$router.push('/product')">
               <span>Product</span>
             </v-btn>
 
@@ -45,9 +45,12 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 .Navbar {
-  background-color: #bbbbbb;
-  height: 75px;
+  padding-top: 20px;
+  background-color: rgb(193, 193, 193);
+  height: 95px;
+  font-family: "Roboto", sans-serif;
 }
 #hr {
   border: 1px dashed black;

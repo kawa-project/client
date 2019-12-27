@@ -1,10 +1,10 @@
 <template>
   <div class="Header">
-    <v-container class="px-0 py-0" fluid style="height:200px;">
+    <v-container class="px-0 py-3" fluid style="height:200px;">
       <v-row justify="center">
         <v-col cols="6" class="mx-0">
           <div id="header-left">
-            <div id="logo-wrap">
+            <div id="logo-wrap" @click.prevent="$router.push('/')">
               <v-img
                 alt="logo"
                 src="../assets/images/logonav.png"
@@ -34,7 +34,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Long+Cang&display=swap");
 .Header {
   font-family: "Long Cang", cursive;
-  background-color: #bbbbbb;
+  background-color: rgb(193, 193, 193);
 }
 #header-left {
   float: left;
@@ -50,6 +50,12 @@ export default {
   border: 2px solid black;
   border-radius: 8px;
   margin-left: 75px;
+}
+
+#logo-wrap:hover {
+  cursor: pointer;
+  background-color: burlywood;
+  transition-delay: 0.5s;
 }
 
 #logo-wrap p {
