@@ -1,32 +1,31 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <navbar-component />
+    <!-- <v-sheet id="scrolling-techniques-2" class="overflow-y-auto" max-height="600"> -->
+    <v-content>
+      <!-- <v-container max-height="600" style="height: 1500px; width: 100%;"> -->
+
+      <router-view />
+      <!-- </v-container> -->
+    </v-content>
+    <!-- </v-sheet> -->
+    <!-- <v-content>
+      <router-view />
+    </v-content>-->
+    <vue-snotify></vue-snotify>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navbar from "@/components/Navbar.vue";
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  name: "App",
+  components: {
+    "navbar-component": Navbar
+  },
+  data: () => ({
+    //
+  })
+};
+</script>
