@@ -1,11 +1,12 @@
 <template>
   <div class="Home">
-  
+    <v-container>
+      <banner-component />
+    </v-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import Banner from "@/components/Banner.vue";
 
 export default {
@@ -18,6 +19,8 @@ export default {
 
 <style scoped>
 .Home {
-  overflow: hidden !important;
+  overflow: hidden;
+  position: relative;
+  background-color: #bbbbbb;
 }
 </style>
