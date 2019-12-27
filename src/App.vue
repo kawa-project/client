@@ -1,10 +1,12 @@
 <template>
   <div class="App">
-    <v-app>
+    <v-app id="app">
       <header-component />
       <navbar-component />
       <v-content>
-        <router-view />
+        <transition name="fadeWindow" mode="out-in">
+          <router-view />
+        </transition>
       </v-content>
       <footer-component />
       <vue-snotify></vue-snotify>
@@ -30,11 +32,30 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .App {
   width: 100%;
   height: 100vh;
   padding: 0px;
   margin: 0px;
+  background-color: rgb(193, 193, 193);
+}
+
+#app {
+  width: 100%;
+  height: auto;
+  padding: 0px;
+  margin: 0px;
+  background-color: rgb(193, 193, 193);
+}
+
+.fadeWindow-enter-active,
+.fadeWindow-leave-active {
+  transition: opacity 0.2s ease-in;
+}
+
+.fadeWindow-enter,
+.fadeWindow-leave-to {
+  opacity: 0;
 }
 </style>
