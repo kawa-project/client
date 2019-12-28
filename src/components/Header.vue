@@ -6,6 +6,7 @@
           <div id="header-left">
             <div id="logo-wrap" @click.prevent="$router.push('/')">
               <v-img
+                id="logo-nav"
                 alt="logo"
                 src="../assets/images/logonav.png"
                 max-width="200"
@@ -52,10 +53,22 @@ export default {
   margin-left: 75px;
 }
 
+#logo-nav:hover {
+  animation: rotation linear 2s infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 #logo-wrap:hover {
   cursor: pointer;
   background-color: burlywood;
-  transition-delay: 0.5s;
+  transition-delay: 1s;
 }
 
 #logo-wrap p {
