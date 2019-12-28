@@ -5,7 +5,9 @@
         <v-col cols="10">
           <hr id="hr" />
           <v-app-bar flat dense light color="rgba(0,0,0,0)">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon
+              @click.prevent="drawer = true"
+            ></v-app-bar-nav-icon>
 
             <v-toolbar-title>Menus</v-toolbar-title>
 
@@ -35,12 +37,23 @@
         </v-col>
       </v-row>
     </v-container>
+    <navdrawer-component :drawer="drawer" @close-drawer="drawer = $event" />
   </div>
 </template>
 
 <script>
+import NavDrawer from "@/components/NavDrawer.vue";
+
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  components: {
+    "navdrawer-component": NavDrawer
+  },
+  data() {
+    return {
+      drawer: false
+    };
+  }
 };
 </script>
 

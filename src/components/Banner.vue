@@ -44,6 +44,15 @@ export default {
         },
         {
           src: "https://i.ibb.co/dgkdLgY/FOTO1.jpg"
+        },
+        {
+          src: "https://i.imgur.com/t04lPHx.jpg"
+        },
+        {
+          src: "https://imgur.com/cH4iFyO.jpg"
+        },
+        {
+          src: "https://imgur.com/Y00Qcq7.jpg"
         }
       ]
     };

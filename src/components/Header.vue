@@ -1,6 +1,6 @@
 <template>
   <div class="Header">
-    <v-container class="px-0 py-3" fluid style="height:200px;">
+    <v-container class="px-0 py-3" style="height:200px;">
       <v-row justify="center">
         <v-col cols="6" class="mx-0">
           <div id="header-left">
@@ -50,7 +50,7 @@ export default {
   position: relative;
   border: 2px solid black;
   border-radius: 8px;
-  margin-left: 75px;
+  margin-left: 10px;
 }
 
 #logo-nav:hover {
