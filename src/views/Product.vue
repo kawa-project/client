@@ -1,12 +1,17 @@
 <template>
   <div class="Product">
-    <v-container fluid>
+    <v-container>
       <v-row>
-        <v-col cols="10" class="mx-auto text-left">
+        <v-col
+          v-if="$route.path == '/product'"
+          cols="10"
+          class="mx-auto text-left"
+        >
           <h2 id="label-product">Product</h2>
         </v-col>
       </v-row>
-      <shoes-component />
+      <shoes-component v-if="$route.path == '/product'" />
+      <router-view v-if="$route.params" />
     </v-container>
   </div>
 </template>

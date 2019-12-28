@@ -13,7 +13,7 @@
     <v-divider></v-divider>
 
     <v-list dense>
-      <v-list-item v-for="item in items" :key="item.title" link>
+      <v-list-item v-for="item in items" :key="item.title" :to="item.link">
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -38,8 +38,9 @@ export default {
     return {
       //   drawer: null,
       items: [
-        { title: "Home", icon: "mdi-view-dashboard" },
-        { title: "About", icon: "mdi-lightbulb-outline" }
+        { title: "Home", icon: "mdi-view-dashboard", link: "/" },
+        { title: "Profile", icon: "mdi-account-box-outline", link: "/profile" },
+        { title: "Add Product", icon: "mdi-rocket", link: "/admin/add-product" }
       ]
     };
   },
@@ -58,5 +59,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
