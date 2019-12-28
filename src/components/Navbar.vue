@@ -7,9 +7,10 @@
           <v-app-bar flat dense light color="rgba(0,0,0,0)">
             <v-app-bar-nav-icon
               @click.prevent="drawer = true"
+              v-if="isLogin"
             ></v-app-bar-nav-icon>
 
-            <v-toolbar-title>Menus</v-toolbar-title>
+            <v-toolbar-title v-if="isLogin">Menus</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
@@ -53,6 +54,11 @@ export default {
     return {
       drawer: false
     };
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.user.isLogin;
+    }
   }
 };
 </script>

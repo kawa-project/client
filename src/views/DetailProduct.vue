@@ -53,6 +53,15 @@
                 light
                 flat
               ></v-select>
+              <v-btn
+                depressed
+                color="brown darken-3"
+                dark
+                style="font-size:13px; width:150px;"
+                class="mb-5"
+              >
+                Add To Cart
+              </v-btn>
             </v-form>
           </div>
           <hr />
