@@ -23,11 +23,11 @@
               <span>How To Order</span>
             </v-btn>
 
-            <v-btn id="btn-menu" text>
+            <v-btn id="btn-menu" text @click.prevent="$router.push('/about')">
               <span>About Us</span>
             </v-btn>
 
-            <v-btn id="btn-menu" text>
+            <v-btn id="btn-menu" text @click.prevent="$router.push('/contact')">
               <span>Contact Us</span>
             </v-btn>
           </v-app-bar>

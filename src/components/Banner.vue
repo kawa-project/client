@@ -41,6 +41,9 @@ export default {
         },
         {
           src: "http://artapfootwear.com/wp-content/uploads/2018/06/4-001.jpg"
+        },
+        {
+          src: "https://i.ibb.co/dgkdLgY/FOTO1.jpg"
         }
       ]
     };
