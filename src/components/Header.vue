@@ -18,16 +18,80 @@
           </div>
         </v-col>
         <v-col cols="4" class="mx-0">
-          <div id="header-right"></div>
+          <div
+            id="header-right"
+            class="d-flex flex-column align-end"
+            style="position:relative; top:190%;"
+          >
+            <div id="btn-sign" v-if="!isLogin">
+              <v-btn
+                id="btn"
+                depressed
+                text
+                style="font-size:25px;"
+                @click.prevent="dialogLogin"
+              >
+                LOGIN
+              </v-btn>
+              <v-btn
+                id="btn"
+                depressed
+                text
+                style="font-size:25px;"
+                @click.prevent="dialogRegister"
+              >
+                Register
+              </v-btn>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-container>
+    <dialogsign-component
+      :dialoglogin="dialoglogin"
+      :dialogregister="dialogregister"
+      @close-dialoglogin="closeDialogLogin"
+      @close-dialogregister="closeDialogRegister"
+      @open-dialoglogin="dialogLogin"
+    />
   </div>
 </template>
 
 <script>
+import DialogSign from "@/components/DialogSign.vue";
+
 export default {
-  name: "Header"
+  name: "Header",
+  components: {
+    "dialogsign-component": DialogSign
+  },
+  data() {
+    return {
+      dialoglogin: false,
+      dialogregister: false
+    };
+  },
+  methods: {
+    dialogLogin() {
+      this.dialogregister = false;
+      this.dialoglogin = true;
+    },
+    closeDialogLogin() {
+      this.dialoglogin = false;
+    },
+    dialogRegister() {
+      this.dialoglogin = false;
+      this.dialogregister = true;
+    },
+    closeDialogRegister() {
+      this.dialogregister = false;
+    }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.user.isLogin;
+    }
+  }
 };
 </script>
 
@@ -77,5 +141,9 @@ export default {
   left: 20%;
   z-index: 2;
   font-size: 30px;
+}
+
+#btn:hover {
+  color: red;
 }
 </style>

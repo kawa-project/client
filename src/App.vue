@@ -28,7 +28,20 @@ export default {
   },
   data: () => ({
     //
-  })
+  }),
+  created() {
+    if (localStorage.getItem("token")) {
+      this.$store.commit("user/SET_LOGIN", true);
+      this.$store.dispatch("user/getUserInfo");
+    } else {
+      let payload = {
+        avatar: "https://randomuser.me/api/portraits/men/78.jpg",
+        username: "anonymus"
+      };
+      this.$store.commit("user/SET_USER_INFO", payload);
+      console.log(this.$store.state.user.userInfo);
+    }
+  }
 };
 </script>
 
