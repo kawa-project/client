@@ -16,7 +16,12 @@
             ></v-img>
           </div>
           <a id="sepatu-display" @click.prevent="goDetailProduct(product._id)">
-            <v-img id="my-shoes" alt="sepatu" :src="product.image"></v-img>
+            <v-img
+              id="my-shoes"
+              alt="sepatu"
+              :src="product.image"
+              max-width="446"
+            ></v-img>
           </a>
           <div id="title-sepatu">
             <h2>
@@ -54,19 +59,19 @@ export default {
           showProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
-          position: "leftTop"
+          position: "leftTop",
         });
       }
-    }
+    },
   },
   computed: {
     fetchAllProduct() {
       return this.$store.state.product.allProduct;
-    }
+    },
   },
   created() {
     this.getAllProduct();
-  }
+  },
 };
 </script>
 

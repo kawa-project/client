@@ -5,7 +5,12 @@
         <v-col cols="6" class="mx-0">
           <div id="header-left">
             <div id="logo-wrap" @click.prevent="$router.push('/')">
-              <v-img id="logo-nav" alt="logo" src="../assets/images/logonav.png" max-width="200"></v-img>
+              <v-img
+                id="logo-nav"
+                alt="logo"
+                src="../assets/images/logonav.png"
+                max-width="200"
+              ></v-img>
               <p>Kawa Craft</p>
             </div>
           </div>
@@ -23,19 +28,23 @@
                 text
                 style="font-size:25px;"
                 @click.prevent="dialogLogin"
-              >LOGIN</v-btn>
+                >LOGIN</v-btn
+              >
               <v-btn
                 id="btn"
                 depressed
                 text
                 style="font-size:25px;"
                 @click.prevent="dialogRegister"
-              >Register</v-btn>
+                >Register</v-btn
+              >
             </div>
-            <div class="text-center mr-5 cart">
+            <div class="text-center mr-5 cart" v-if="isLogin">
               <v-badge>
-                <template v-slot:badge>10</template>
-                <v-icon large>mdi-cart-arrow-down</v-icon>
+                <template v-slot:badge>{{ totalCart }}</template>
+                <v-icon large @click.prevent="goToCart"
+                  >mdi-cart-arrow-down</v-icon
+                >
               </v-badge>
             </div>
           </div>
@@ -58,12 +67,12 @@ import DialogSign from "@/components/DialogSign.vue";
 export default {
   name: "Header",
   components: {
-    "dialogsign-component": DialogSign
+    "dialogsign-component": DialogSign,
   },
   data() {
     return {
       dialoglogin: false,
-      dialogregister: false
+      dialogregister: false,
     };
   },
   methods: {
@@ -80,13 +89,19 @@ export default {
     },
     closeDialogRegister() {
       this.dialogregister = false;
-    }
+    },
+    goToCart() {
+      this.$router.push("/cart");
+    },
   },
   computed: {
     isLogin() {
       return this.$store.state.user.isLogin;
-    }
-  }
+    },
+    totalCart() {
+      return this.$store.state.cart.currentCart.length;
+    },
+  },
 };
 </script>
 

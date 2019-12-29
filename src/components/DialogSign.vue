@@ -117,46 +117,46 @@ export default {
   name: "DialogSign",
   props: {
     dialoglogin: {
-      type: Boolean
+      type: Boolean,
     },
     dialogregister: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
       valid: true,
       login: {
         email: "",
-        password: ""
+        password: "",
       },
       register: {
         username: "",
         email: "",
         password: "",
         address: "",
-        phone: ""
+        phone: "",
       },
       loginemailRules: [
         v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       registeremailRules: [
         v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       usernameRules: [v => !!v || "Username is required"],
       addressRules: [v => !!v || "Address is required"],
       phoneRules: [v => !!v || "Phone is required"],
       loginpasswordRules: [
         v => !!v || "password is required",
-        v => v.length >= 6 || "password minimum 6 characters"
+        v => v.length >= 6 || "password minimum 6 characters",
       ],
       registerpasswordRules: [
         v => !!v || "password is required",
-        v => v.length >= 6 || "password minimum 6 characters"
+        v => v.length >= 6 || "password minimum 6 characters",
       ],
-      checkbox: false
+      checkbox: false,
     };
   },
   methods: {
@@ -172,8 +172,9 @@ export default {
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
-              position: "leftTop"
+              position: "leftTop",
             });
+            this.$router.push("/");
           })
           .catch(err => {
             this.resetLogin();
@@ -186,7 +187,7 @@ export default {
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
-              position: "leftTop"
+              position: "leftTop",
             });
           });
       }
@@ -201,7 +202,7 @@ export default {
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
-              position: "leftTop"
+              position: "leftTop",
             });
             this.$emit("open-dialoglogin");
             this.resetRegister();
@@ -217,7 +218,7 @@ export default {
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
-              position: "leftTop"
+              position: "leftTop",
             });
           });
       }
@@ -227,7 +228,7 @@ export default {
     },
     resetRegister() {
       this.$refs.formRegister.reset();
-    }
+    },
   },
   watch: {
     dialoglogin(val) {
@@ -244,8 +245,8 @@ export default {
         this.$emit("close-dialogregister");
         this.resetRegister();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

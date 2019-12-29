@@ -13,12 +13,6 @@
                 ></v-img>
               </div>
               <a>
-                <!-- <v-img
-                  id="img-container"
-                  class="detail-img"
-                  alt="sepatu"
-                  :src="detailProduct.image"
-                ></v-img> -->
                 <image-magnifier
                   class="detail-img"
                   :src="detailProduct.image"
@@ -72,6 +66,7 @@
                 dark
                 style="font-size:13px; width:150px;"
                 class="mb-5"
+                type="submit"
                 >Add To Cart</v-btn
               >
             </v-form>
@@ -94,7 +89,7 @@ export default {
   data() {
     return {
       add: "",
-      size: [{ text: "select size", value: 0 }]
+      size: [{ text: "select size", value: 0 }],
     };
   },
   methods: {
@@ -114,16 +109,50 @@ export default {
     },
     convert(item) {
       return format.convert(item);
-    }
+    },
+    addToCart() {
+      let payload = {
+        id: this.$route.params.id,
+        data: {
+          stock: 1,
+          size: this.add,
+        },
+      };
+      this.$store
+        .dispatch("cart/addToCart", payload)
+        .then(({ data }) => {
+          this.$store.dispatch("cart/fetchCart");
+          this.$snotify.success(`Success add product`, {
+            timeout: 5000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        });
+    },
   },
   computed: {
     detailProduct() {
       return this.$store.state.product.detailProduct;
-    }
+    },
   },
   created() {
     this.getOneProduct();
-  }
+  },
 };
 </script>
 
