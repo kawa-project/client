@@ -8,13 +8,21 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      auth: false,
+      title: "KawaCraft"
+    }
   },
   {
     path: "/product",
     name: "Product",
     component: () =>
       import(/* webpackChunkName: "Product" */ "../views/Product.vue"),
+    meta: {
+      auth: false,
+      title: "Product | KawaCraft"
+    },
     children: [
       {
         path: ":id",
@@ -22,7 +30,11 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "DetailProduct" */ "../views/DetailProduct.vue"
-          )
+          ),
+        meta: {
+          auth: false,
+          title: "Detail Product | KawaCraft"
+        }
       }
     ]
   },
@@ -32,30 +44,50 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "CustomerTransaction" */ "../components/Transaction.vue"
-      )
+      ),
+    meta: {
+      auth: false,
+      title: "Transaction | KawaCraft"
+    }
   },
   {
     path: "/about",
     name: "About",
     component: () =>
-      import(/* webpackChunkName: "About" */ "../views/About.vue")
+      import(/* webpackChunkName: "About" */ "../views/About.vue"),
+    meta: {
+      auth: false,
+      title: "About Us | KawaCraft"
+    }
   },
   {
     path: "/cart",
     name: "Cart",
-    component: () => import(/* webpackChunkName: "Cart" */ "../views/Cart.vue")
+    component: () => import(/* webpackChunkName: "Cart" */ "../views/Cart.vue"),
+    meta: {
+      auth: false,
+      title: "Cart | KawaCraft"
+    }
   },
   {
     path: "/contact",
     name: "Contact",
     component: () =>
-      import(/* webpackChunkName: "Contact" */ "../views/Contact.vue")
+      import(/* webpackChunkName: "Contact" */ "../views/Contact.vue"),
+    meta: {
+      auth: false,
+      title: "Contact Us | KawaCraft"
+    }
   },
   {
     path: "/admin",
     name: "Admin",
     component: () =>
       import(/* webpackChunkName: "AdminPage" */ "../views/AdminPage.vue"),
+    meta: {
+      auth: false,
+      title: "Admin Page | KawaCraft"
+    },
     children: [
       {
         path: "transaction",
@@ -63,7 +95,11 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "transaction" */ "../components/Transaction.vue"
-          )
+          ),
+        meta: {
+          auth: false,
+          title: "Transaction | KawaCraft"
+        }
       },
       {
         path: "add-product",
@@ -71,7 +107,11 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
-          )
+          ),
+        meta: {
+          auth: false,
+          title: "Add Product | KawaCraft"
+        }
       },
       {
         path: ":id",
@@ -79,7 +119,11 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
-          )
+          ),
+        meta: {
+          auth: false,
+          title: "Edit Product | KawaCraft"
+        }
       }
     ]
   }

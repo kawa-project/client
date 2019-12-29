@@ -2,13 +2,13 @@ import axios from "@/api/axios.js";
 
 export default {
   state: {
-    currentCart: {},
+    currentCart: {}
   },
   getters: {},
   mutations: {
     SET_CART(state, payload) {
       state.currentCart = payload;
-    },
+    }
   },
   actions: {
     fetchCart({ commit }, payload) {
@@ -16,8 +16,8 @@ export default {
         url: "/cart",
         method: "GET",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       })
         .then(({ data }) => {
           commit("SET_CART", data);
@@ -31,8 +31,8 @@ export default {
         url: `/cart/${payload}/add`,
         method: "PUT",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     minusItemCart({ commit }, payload) {
@@ -40,8 +40,8 @@ export default {
         url: `/cart/${payload}/min`,
         method: "PUT",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     deleteItem({ commit }, payload) {
@@ -49,9 +49,9 @@ export default {
         url: `/cart/${payload}`,
         method: "DELETE",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
-    },
-  },
+    }
+  }
 };

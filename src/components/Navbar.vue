@@ -5,10 +5,7 @@
         <v-col cols="10">
           <hr id="hr" />
           <v-app-bar flat dense light color="rgba(0,0,0,0)">
-            <v-app-bar-nav-icon
-              @click.prevent="drawer = true"
-              v-if="isLogin"
-            ></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click.prevent="drawer = true" v-if="isLogin"></v-app-bar-nav-icon>
 
             <v-toolbar-title v-if="isLogin">Menus</v-toolbar-title>
 

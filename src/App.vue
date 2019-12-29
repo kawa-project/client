@@ -5,7 +5,7 @@
       <navbar-component />
       <v-content>
         <transition name="fadeWindow" mode="out-in">
-          <router-view />
+          <router-view @open-dialoglogin="openDialogLogin" />
         </transition>
       </v-content>
       <footer-component />
@@ -26,9 +26,10 @@ export default {
     "navbar-component": Navbar,
     "footer-component": Footer
   },
-  data: () => ({
-    //
-  }),
+  data() {
+    return {};
+  },
+  methods: {},
   created() {
     if (localStorage.getItem("token")) {
       this.$store.commit("user/SET_LOGIN", true);
@@ -39,6 +40,14 @@ export default {
         username: "anonymus"
       };
       this.$store.commit("user/SET_USER_INFO", payload);
+    }
+  },
+  watch: {
+    $route: {
+      handler: (to, from) => {
+        document.title = to.meta.title || "KawaCraft";
+      },
+      immediate: true
     }
   }
 };

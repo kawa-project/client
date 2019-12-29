@@ -2,11 +2,7 @@
   <div class="Product">
     <v-container>
       <v-row>
-        <v-col
-          v-if="$route.path == '/product'"
-          cols="10"
-          class="mx-auto text-left"
-        >
+        <v-col v-if="$route.path == '/product'" cols="10" class="mx-auto text-left">
           <h2 id="label-product">Product</h2>
         </v-col>
       </v-row>
@@ -47,12 +43,12 @@ export default {
   text-align: center;
   padding: 2px;
   margin: 3px;
-  transition: 0.5s;
+  transition: 1s;
 }
 
 #my-shoes {
-  transition: 0.5s;
-  animation: rotation2 0.5s linear;
+  transition: 1s;
+  animation: rotation2 1s linear;
   animation-fill-mode: backwards;
 }
 

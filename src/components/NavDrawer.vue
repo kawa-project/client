@@ -118,6 +118,7 @@ export default {
           localStorage.removeItem("role");
         });
       }, 1);
+      this.$router.push("/");
     }
   },
   watch: {
@@ -158,8 +159,6 @@ export default {
         username: "anonymus"
       };
     } else {
-      console.log("masuk");
-      console.log(this.$store.state.user.userInfo);
       this.currentUser = this.$store.state.user.userInfo;
     }
   }
