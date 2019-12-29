@@ -236,7 +236,13 @@ export default {
         this.resetLogin();
       } else {
         this.$emit("close-dialogregister");
-        // this.resetRegister();
+        this.resetRegister();
+      }
+    },
+    dialogregister(val) {
+      if (!val) {
+        this.$emit("close-dialogregister");
+        this.resetRegister();
       }
     }
   }

@@ -32,7 +32,8 @@ export default {
             localStorage.setItem("token", data.token);
             localStorage.setItem("role", data.user.role);
             commit("SET_LOGIN", true);
-            dispatch("getUserInfo");
+            commit("SET_USER_INFO", data.user);
+            // dispatch("getUserInfo");
             resolve(data);
           })
           .catch(err => {
