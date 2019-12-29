@@ -39,7 +39,6 @@ export default {
         username: "anonymus"
       };
       this.$store.commit("user/SET_USER_INFO", payload);
-      console.log(this.$store.state.user.userInfo);
     }
   }
 };

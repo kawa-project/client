@@ -6,29 +6,40 @@
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title>{{ userInfo.username }}</v-list-item-title>
+        <v-list-item-title style="text-transform:uppercase;">{{ userInfo.username }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
     <v-divider></v-divider>
 
     <v-list dense>
-      <v-list-item v-for="item in items" :key="item.title" :to="item.link">
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+      <div v-if="statusRole">
+        <v-list-item v-for="item in itemsAdmin" :key="item.title" :to="item.link">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-if="!statusRole">
+        <v-list-item v-for="item in items" :key="item.title" :to="item.link">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
     </v-list>
 
     <template>
       <div class="pa-2 mt-auto" v-if="isLogin">
-        <v-btn depressed color="black" dark block @click.prevent="onLogout"
-          >Logout</v-btn
-        >
+        <v-btn depressed color="black" dark block @click.prevent="onLogout">Logout</v-btn>
       </div>
     </template>
   </v-navigation-drawer>
@@ -44,16 +55,24 @@ export default {
   },
   data() {
     return {
+      statusRole: false,
       currentUser: null,
       items: [
         { title: "Home", icon: "mdi-view-dashboard", link: "/" },
-        { title: "Account", icon: "mdi-account-box-outline", link: "/account" },
+        { title: "Account", icon: "mdi-account-box-outline", link: "/account" }
+      ],
+      itemsAdmin: [
+        { title: "Home", icon: "mdi-view-dashboard", link: "/" },
         {
           title: "Add Product",
           icon: "mdi-rocket",
           link: "/admin/add-product"
         },
-        { title: "Edit Product", icon: "mdi-file", link: "/product" }
+        {
+          title: "Edit Product",
+          icon: "mdi-file",
+          link: "/product"
+        }
       ]
     };
   },
@@ -86,7 +105,13 @@ export default {
     },
     userInfo(val) {
       if (val) {
-        this.currentUser = val;
+        if (val.role === "admin") {
+          this.currentUser = val;
+          this.statusRole = true;
+        } else {
+          this.currentUser = val;
+          this.statusRole = false;
+        }
       } else {
         this.currentUser = {
           avatar: "https://randomuser.me/api/portraits/men/78.jpg",
@@ -110,6 +135,8 @@ export default {
         username: "anonymus"
       };
     } else {
+      console.log("masuk");
+      console.log(this.$store.state.user.userInfo);
       this.currentUser = this.$store.state.user.userInfo;
     }
   }
