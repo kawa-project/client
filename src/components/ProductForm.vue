@@ -1,5 +1,8 @@
 <template>
-  <v-container id="container">
+  <v-container
+    id="container"
+    v-if="$route.path === '/product/add-product' || $route.params.id !== 'transaction'"
+  >
     <v-row justify="center">
       <v-col cols="5" class="text-center">
         <p>Upload Image</p>

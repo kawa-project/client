@@ -60,6 +60,14 @@ const routes = [
             /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
           ),
       },
+      {
+        path: "transaction",
+        name: "Transaction",
+        component: () =>
+          import(
+            /* webpackChunkName: "transaction" */ "../components/Transaction.vue"
+          ),
+      },
     ],
   },
 ];
