@@ -3,7 +3,10 @@ import Vuex from "vuex";
 import User from "./modules/user";
 import user from "./modules/user";
 import Product from "./modules/product";
+<<<<<<< HEAD
 import Transaction from "./modules/transaction";
+=======
+>>>>>>> update feature client detail image
 import Cart from "./modules/cart";
 
 Vue.use(Vuex);
@@ -24,6 +27,7 @@ export default new Vuex.Store({
       mutations: Product.mutations,
       actions: Product.actions
     },
+<<<<<<< HEAD
     transaction: {
       namespaced: true,
       state: Transaction.state,
@@ -31,6 +35,8 @@ export default new Vuex.Store({
       mutations: Transaction.mutations,
       actions: Transaction.actions
     },
+=======
+>>>>>>> update feature client detail image
     cart: {
       namespaced: true,
       state: Cart.state,

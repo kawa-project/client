@@ -13,17 +13,27 @@
                 ></v-img>
               </div>
               <a>
-                <v-img
-                  id="detail-img"
+                <!-- <v-img
+                  id="img-container"
+                  class="detail-img"
                   alt="sepatu"
-                  src="http://artapfootwear.com/wp-content/uploads/2016/10/51-500x500.jpg"
-                ></v-img>
+                  :src="detailProduct.image"
+                ></v-img> -->
+                <image-magnifier
+                  class="detail-img"
+                  :src="detailProduct.image"
+                  :zoom-src="detailProduct.image"
+                  width="450"
+                  height="450"
+                  zoom-width="400"
+                  zoom-height="300"
+                ></image-magnifier>
               </a>
             </div>
             <div id="small-img" class="mx-auto">
               <v-img
                 alt="sepatu"
-                src="http://artapfootwear.com/wp-content/uploads/2016/10/51-500x500.jpg"
+                :src="detailProduct.image"
                 max-width="100"
                 class="mx-auto"
               ></v-img>
@@ -33,17 +43,20 @@
         <v-col cols="5" class="pt-0">
           <div id="detailRight" class="d-flex flex-column align-start ml-5">
             <div class="detail">
-              <h1 id="detail-title">
-                Law Full Black
-              </h1>
+              <h1 id="detail-title">{{ detailProduct.name }}</h1>
               <br />
             </div>
-            <span style="font-size:30px;">Rp 341.500</span>
+            <span style="font-size:30px;">{{
+              convert(detailProduct.price)
+            }}</span>
             <v-form @submit.prevent="addToCart" class="mt-3">
               <v-select
+                v-model="add"
                 append-icon="mdi-map"
                 dense
                 :items="size"
+                item-text="text"
+                item-value="value"
                 label="Select Size"
                 outlined
                 color="black"
@@ -59,17 +72,13 @@
                 dark
                 style="font-size:13px; width:150px;"
                 class="mb-5"
+                >Add To Cart</v-btn
               >
-                Add To Cart
-              </v-btn>
             </v-form>
           </div>
           <hr />
           <p class="mt-5" style="font-size:15px; line-height:25px;">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto
-            possimus voluptatem autem tempora nobis harum sequi commodi laborum
-            asperiores architecto! Magnam cum laborum reiciendis possimus, a
-            reprehenderit sapiente ex accusamus?
+            {{ detailProduct.desc }}
           </p>
         </v-col>
       </v-row>
@@ -78,23 +87,54 @@
 </template>
 
 <script>
+import format from "rupiah-format";
+
 export default {
   name: "DetailProduct",
   data() {
     return {
-      add: {
-        size: "",
-        stock: 1
-      },
-      size: ["Select Size", "43", "42"]
+      add: "",
+      size: [{ text: "select size", value: 0 }]
     };
+  },
+  methods: {
+    getOneProduct() {
+      let payload = this.$route.params.id;
+      this.$store.dispatch("product/getOneProduct", payload).then(_ => {
+        let attributes = this.$store.state.product.detailProduct.attributes;
+        attributes.forEach(el => {
+          let obj = {};
+          let detailSize = "";
+          detailSize += `size : ${el.size} - stock : ${el.stock}`;
+          obj["text"] = detailSize;
+          obj["value"] = el.size;
+          this.size.push(obj);
+        });
+      });
+    },
+    convert(item) {
+      return format.convert(item);
+    }
+  },
+  computed: {
+    detailProduct() {
+      return this.$store.state.product.detailProduct;
+    }
+  },
+  created() {
+    this.getOneProduct();
   }
 };
 </script>
 
 <style scoped>
-span #detail-img {
-  cursor: zoom-in;
+.detail-img {
+  cursor: crosshair !important;
+  transform: translatey(-100px);
+  transition: 1s;
+  animation: downfade 1.2s linear;
+  animation-fill-mode: forwards;
+  z-index: 2;
 }
 
 #small-img {
@@ -112,5 +152,14 @@ span #detail-img {
 
 hr {
   border: 1px dashed black;
+}
+
+@keyframes downfade {
+  from {
+    transform: translateY(-150px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 </style>

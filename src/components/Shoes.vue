@@ -1,7 +1,12 @@
 <template>
   <div class="Shoes">
     <v-row justify="center" class="d-flex flex-row">
-      <v-col cols="5" class="pt-0">
+      <v-col
+        cols="5"
+        class="pt-0"
+        v-for="product in fetchAllProduct"
+        :key="product._id"
+      >
         <div id="sepatu-thumb">
           <div id="label-sepatu">
             <v-img
@@ -10,19 +15,15 @@
               max-width="70"
             ></v-img>
           </div>
-          <a id="sepatu-display">
-            <v-img
-              id="my-shoes"
-              alt="sepatu"
-              src="http://artapfootwear.com/wp-content/uploads/2016/10/51-500x500.jpg"
-            ></v-img>
+          <a id="sepatu-display" @click.prevent="goDetailProduct(product._id)">
+            <v-img id="my-shoes" alt="sepatu" :src="product.image"></v-img>
           </a>
           <div id="title-sepatu">
             <h2>
-              <a>law full black</a>
+              <a>{{ product.name }}</a>
             </h2>
           </div>
-          <div id="harga-sepatu">Rp 341.500</div>
+          <div id="harga-sepatu">{{ convert(product.price) }}</div>
         </div>
       </v-col>
     </v-row>
@@ -30,9 +31,42 @@
 </template>
 
 <script>
+import format from "rupiah-format";
+
 export default {
   name: "Shoes",
-  methods: {}
+  methods: {
+    getAllProduct() {
+      this.$store.dispatch("product/getAllProduct");
+    },
+    convert(item) {
+      return format.convert(item);
+    },
+    goDetailProduct(id) {
+      if (localStorage.getItem("role") == "customer") {
+        this.$router.push(`/product/${id}`);
+      } else if (localStorage.getItem("role") == "admin") {
+        this.$router.push(`/admin/${id}`);
+      } else if (!localStorage.getItem("token")) {
+        this.$router.push("/");
+        this.$snotify.info(`You Must Login First`, {
+          timeout: 5000,
+          showProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          position: "leftTop"
+        });
+      }
+    }
+  },
+  computed: {
+    fetchAllProduct() {
+      return this.$store.state.product.allProduct;
+    }
+  },
+  created() {
+    this.getAllProduct();
+  }
 };
 </script>
 

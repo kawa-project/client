@@ -164,9 +164,27 @@ export default {
           this.image =
             "http://www.grub.express/uploads/users/product-default.png";
           this.files = [];
+          this.$snotify.success(`${data.message}`, {
+            timeout: 5000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+          this.$router.push("/product");
         })
         .catch(err => {
-          console.log(err);
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
         });
     },
     fileHandle() {
@@ -183,7 +201,7 @@ export default {
     },
     fetchOneProduct(id) {
       this.$store
-        .dispatch("product/getOneProduct", id)
+        .dispatch("product/getOneProductAdmin", id)
         .then(({ data }) => {
           this.name = data.name;
           this.desc = data.desc;
@@ -229,6 +247,7 @@ export default {
         .dispatch("product/updateAttributes", payload)
         .then(({ data }) => {
           this.resetForm();
+          this.$router.push("/product");
         })
         .catch(err => {
           console.log(err.response.data);

@@ -1,9 +1,19 @@
 import axios from "@/api/axios.js";
 
 export default {
-  state: {},
+  state: {
+    allProduct: [],
+    detailProduct: {}
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    SET_ALL_PRODUCT(state, payload) {
+      state.allProduct = payload;
+    },
+    SET_DETAIL_PRODUCT(state, payload) {
+      state.detailProduct = payload;
+    }
+  },
   actions: {
     createProduct({}, payload) {
       return axios({
@@ -25,7 +35,18 @@ export default {
         }
       });
     },
-    getOneProduct({}, payload) {
+    getOneProduct({ commit }, payload) {
+      return axios({
+        url: `/product/${payload}`,
+        method: "GET",
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }).then(({ data }) => {
+        commit("SET_DETAIL_PRODUCT", data);
+      });
+    },
+    getOneProductAdmin({ commit }, payload) {
       return axios({
         url: `/product/${payload}`,
         method: "GET",
@@ -61,6 +82,14 @@ export default {
         headers: {
           token: localStorage.getItem("token")
         }
+      });
+    },
+    getAllProduct({ commit }) {
+      axios({
+        url: "/product/",
+        method: "GET"
+      }).then(({ data }) => {
+        commit("SET_ALL_PRODUCT", data);
       });
     }
   }

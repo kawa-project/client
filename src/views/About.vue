@@ -89,9 +89,7 @@
           <p
             class="text-center font-weight-light my-3"
             style="text-decoration:underline;"
-          >
-            Support your local Product 😊
-          </p>
+          >Support your local Product 😊</p>
           <hr />
         </v-col>
       </v-row>

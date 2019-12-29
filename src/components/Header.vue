@@ -5,15 +5,8 @@
         <v-col cols="6" class="mx-0">
           <div id="header-left">
             <div id="logo-wrap" @click.prevent="$router.push('/')">
-              <v-img
-                id="logo-nav"
-                alt="logo"
-                src="../assets/images/logonav.png"
-                max-width="200"
-              ></v-img>
-              <p>
-                Kawa Craft
-              </p>
+              <v-img id="logo-nav" alt="logo" src="../assets/images/logonav.png" max-width="200"></v-img>
+              <p>Kawa Craft</p>
             </div>
           </div>
         </v-col>
@@ -30,18 +23,20 @@
                 text
                 style="font-size:25px;"
                 @click.prevent="dialogLogin"
-              >
-                LOGIN
-              </v-btn>
+              >LOGIN</v-btn>
               <v-btn
                 id="btn"
                 depressed
                 text
                 style="font-size:25px;"
                 @click.prevent="dialogRegister"
-              >
-                Register
-              </v-btn>
+              >Register</v-btn>
+            </div>
+            <div class="text-center mr-5 cart">
+              <v-badge>
+                <template v-slot:badge>10</template>
+                <v-icon large>mdi-cart-arrow-down</v-icon>
+              </v-badge>
             </div>
           </div>
         </v-col>
@@ -97,10 +92,16 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Long+Cang&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 .Header {
   font-family: "Long Cang", cursive;
   background-color: rgb(193, 193, 193);
 }
+.cart {
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+}
+
 #header-left {
   float: left;
   width: 728px;
