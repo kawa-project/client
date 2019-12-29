@@ -122,30 +122,65 @@ export default {
         });
     },
     deleteItem(id) {
-      this.$store
-        .dispatch("cart/deleteItem", id)
-        .then(({ data }) => {
-          this.getCart();
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop",
-          });
-        });
+      this.$snotify.confirm(`Want Delete This?`, {
+        timeout: 5000,
+        showProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        buttons: [
+          {
+            text: "Yes",
+            action: toast => {
+              this.$store
+                .dispatch("cart/deleteItem", id)
+                .then(({ data }) => {
+                  this.getCart();
+                })
+                .catch(err => {
+                  let text = "";
+                  err.response.data.errors.forEach(element => {
+                    text += element + ", ";
+                  });
+                  this.$snotify.warning(`${text}`, {
+                    timeout: 3000,
+                    showProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    position: "leftTop",
+                  });
+                });
+            },
+            bold: false,
+          },
+          {
+            text: "No",
+            action: toast => {
+              this.$snotify.info(`Cancel Delete from your Cart`, {
+                timeout: 3000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                position: "leftTop",
+              });
+              this.$snotify.remove(toast.id);
+            },
+          },
+          {
+            text: "Close",
+            action: toast => {
+              this.$snotify.remove(toast.id);
+            },
+            bold: true,
+          },
+        ],
+      });
     },
     checkoutItem() {
       this.$store
         .dispatch("transaction/checkoutItem")
         .then(({ data }) => {
           this.$router.push("/");
+          this.$store.dispatch("cart/deleteAllCart");
           this.$snotify.success(`Success Checkout`, {
             timeout: 1500,
             showProgressBar: true,

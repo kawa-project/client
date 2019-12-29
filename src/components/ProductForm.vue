@@ -128,15 +128,15 @@ export default {
         v => !!v || "Price is required",
         v =>
           (v && v > 0) ||
-          "Price cannot have negative value and must greater than 0"
+          "Price cannot have negative value and must greater than 0",
       ],
       stock: "",
       stockRules: [
         v => !!v || "Stock is required",
         v =>
           (v && v > 0) ||
-          "Stock cannot have negative value and must greater than 0"
-      ]
+          "Stock cannot have negative value and must greater than 0",
+      ],
     };
   },
   methods: {
@@ -155,7 +155,7 @@ export default {
         price: this.price,
         stock: this.stock,
         image: this.image,
-        size: this.size
+        size: this.size,
       };
       this.$store
         .dispatch("product/createProduct", payload)
@@ -169,7 +169,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.$router.push("/product");
         })
@@ -183,7 +183,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
         });
     },
@@ -196,7 +196,17 @@ export default {
           this.image = data.image;
         })
         .catch(err => {
-          console.log(err);
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
         });
     },
     fetchOneProduct(id) {
@@ -209,7 +219,17 @@ export default {
           this.price = data.price;
         })
         .catch(err => {
-          console.log(err);
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
         });
     },
     editProduct() {
@@ -218,11 +238,11 @@ export default {
         name: this.name,
         desc: this.desc,
         price: this.price,
-        image: this.image
+        image: this.image,
       };
       let payload = {
         id,
-        data
+        data,
       };
       this.$store
         .dispatch("product/updateProduct", payload)
@@ -230,18 +250,28 @@ export default {
           this.editAttributes();
         })
         .catch(err => {
-          console.log(err.response.data);
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
         });
     },
     editAttributes() {
       let id = this.$route.params.id;
       let data = {
         size: this.size,
-        stock: this.stock
+        stock: this.stock,
       };
       let payload = {
         data,
-        id
+        id,
       };
       this.$store
         .dispatch("product/updateAttributes", payload)
@@ -250,24 +280,81 @@ export default {
           this.$router.push("/product");
         })
         .catch(err => {
-          console.log(err.response.data);
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
         });
     },
     deleteProduct() {
       let id = this.$route.params.id;
-      this.$store
-        .dispatch("product/deleteProduct", id)
-        .then(({ data }) => {
-          this.resetForm();
-          this.image =
-            "http://www.grub.express/uploads/users/product-default.png";
-          this.$router.push("/product");
-          // fetch product lagi
-        })
-        .catch(err => {
-          console.log(err.response.data);
-        });
-    }
+      this.$snotify.confirm(`item: ${item.name}`, `Want Delete This?`, {
+        timeout: 5000,
+        showProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        buttons: [
+          {
+            text: "Yes",
+            action: toast => {
+              this.$store
+                .dispatch("product/deleteProduct", id)
+                .then(({ data }) => {
+                  this.resetForm();
+                  this.image =
+                    "http://www.grub.express/uploads/users/product-default.png";
+                  this.$store.dispatch("product/getAllProduct");
+                  this.$router.push("/product");
+                })
+                .catch(err => {
+                  let text = "";
+                  err.response.data.errors.forEach(element => {
+                    text += element + ", ";
+                  });
+                  this.$snotify.warning(`${text}`, {
+                    timeout: 3000,
+                    showProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    position: "leftTop",
+                  });
+                });
+            },
+            bold: false,
+          },
+          {
+            text: "No",
+            action: toast => {
+              this.$snotify.info(
+                `Cancel Delete ${item.name} from your Item Mall`,
+                {
+                  timeout: 3000,
+                  showProgressBar: true,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  position: "leftTop",
+                }
+              );
+              this.$snotify.remove(toast.id);
+            },
+          },
+          {
+            text: "Close",
+            action: toast => {
+              this.$snotify.remove(toast.id);
+            },
+            bold: true,
+          },
+        ],
+      });
+    },
   },
   created() {
     if (this.$route.params.id) {
@@ -275,7 +362,7 @@ export default {
       let id = this.$route.params.id;
       this.fetchOneProduct(id);
     }
-  }
+  },
 };
 </script>
 
