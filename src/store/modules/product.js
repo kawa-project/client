@@ -11,8 +11,7 @@ export default {
         method: "POST",
         data: payload,
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
@@ -22,8 +21,7 @@ export default {
         method: "POST",
         data: payload,
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
@@ -32,8 +30,7 @@ export default {
         url: `/product/${payload}`,
         method: "GET",
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
@@ -43,8 +40,7 @@ export default {
         method: "PUT",
         data: payload.data,
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
@@ -54,8 +50,7 @@ export default {
         method: "PUT",
         data: payload.data,
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
@@ -64,8 +59,7 @@ export default {
         url: `/product/${payload}`,
         method: "DELETE",
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMDRmNWNiMTkzZWM2MzNmMjJlMDE2NyIsImlhdCI6MTU3NzU0NTM2MH0.NNpCp6Bl-0j_NNuDyONu24AeQwBaqZy1W4bp0VzyBeA",
+          token: localStorage.getItem("token"),
         },
       });
     },
