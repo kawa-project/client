@@ -1,12 +1,15 @@
 <template>
-  <v-container
-    id="container"
-    v-if="$route.path === '/product/add-product' || $route.params.id !== 'transaction'"
-  >
+  <v-container id="container" v-if="$route.path !== '/admin/transaction'">
     <v-row justify="center">
       <v-col cols="5" class="text-center">
         <p>Upload Image</p>
-        <v-img contain class="image-upload mx-auto" height="250" width="250" :src="image"></v-img>
+        <v-img
+          contain
+          class="image-upload mx-auto"
+          height="250"
+          width="250"
+          :src="image"
+        ></v-img>
         <v-file-input
           v-model="files"
           color="deep-purple accent-4"
@@ -23,12 +26,20 @@
           ref="file"
         >
           <template v-slot:selection="{ index, text }">
-            <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
+            <v-chip
+              v-if="index < 2"
+              color="deep-purple accent-4"
+              dark
+              label
+              small
+              >{{ text }}</v-chip
+            >
 
             <span
               v-else-if="index === 2"
               class="overline grey--text text--darken-3 mx-2"
-            >+{{ files.length - 2 }} File(s)</span>
+              >+{{ files.length - 2 }} File(s)</span
+            >
           </template>
         </v-file-input>
       </v-col>
@@ -43,7 +54,13 @@
             outlined
             dense
           ></v-text-field>
-          <v-textarea label="Description" v-model="desc" clearable dense outlined></v-textarea>
+          <v-textarea
+            label="Description"
+            v-model="desc"
+            clearable
+            dense
+            outlined
+          ></v-textarea>
           <v-text-field
             label="Price"
             type="Number"
@@ -53,7 +70,13 @@
             outlined
             dense
           ></v-text-field>
-          <v-select v-model="size" :items="item" dense label="Size" :rules="sizeRules"></v-select>
+          <v-select
+            v-model="size"
+            :items="item"
+            dense
+            label="Size"
+            :rules="sizeRules"
+          ></v-select>
           <v-text-field
             v-model="stock"
             :rules="stockRules"
@@ -66,12 +89,18 @@
           ></v-text-field>
           <div v-if="add">
             <v-btn color="success" @click="validate">Submit</v-btn>
-            <v-btn class="ml-3" color="warning" @click="resetForm">Reset Form</v-btn>
+            <v-btn class="ml-3" color="warning" @click="resetForm"
+              >Reset Form</v-btn
+            >
           </div>
           <div v-if="!add">
             <v-btn color="success" @click="editProduct">Edit</v-btn>
-            <v-btn class="ml-3" color="warning" @click="resetForm">Reset Form</v-btn>
-            <v-btn class="ml-3" dark color="red" @click="deleteProduct">Delete</v-btn>
+            <v-btn class="ml-3" color="warning" @click="resetForm"
+              >Reset Form</v-btn
+            >
+            <v-btn class="ml-3" dark color="red" @click="deleteProduct"
+              >Delete</v-btn
+            >
           </div>
         </v-form>
       </v-col>
@@ -222,7 +251,7 @@ export default {
     }
   },
   created() {
-    if (this.$route.params.id !== "add-product") {
+    if (this.$route.params.id) {
       this.add = false;
       let id = this.$route.params.id;
       this.fetchOneProduct(id);

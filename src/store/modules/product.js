@@ -11,8 +11,8 @@ export default {
         method: "POST",
         data: payload,
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     uploadImage({}, payload) {
@@ -21,8 +21,8 @@ export default {
         method: "POST",
         data: payload,
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     getOneProduct({}, payload) {
@@ -30,8 +30,8 @@ export default {
         url: `/product/${payload}`,
         method: "GET",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     updateProduct({}, payload) {
@@ -40,8 +40,8 @@ export default {
         method: "PUT",
         data: payload.data,
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     updateAttributes({}, payload) {
@@ -50,8 +50,8 @@ export default {
         method: "PUT",
         data: payload.data,
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
     },
     deleteProduct({}, payload) {
@@ -59,9 +59,9 @@ export default {
         url: `/product/${payload}`,
         method: "DELETE",
         headers: {
-          token: localStorage.getItem("token"),
-        },
+          token: localStorage.getItem("token")
+        }
       });
-    },
-  },
+    }
+  }
 };
