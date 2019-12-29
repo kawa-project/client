@@ -6,7 +6,9 @@
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title style="text-transform:uppercase;">{{ userInfo.username }}</v-list-item-title>
+        <v-list-item-title style="text-transform:uppercase;">
+          {{ userInfo.username }}
+        </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
@@ -14,7 +16,11 @@
 
     <v-list dense>
       <div v-if="statusRole">
-        <v-list-item v-for="item in itemsAdmin" :key="item.title" :to="item.link">
+        <v-list-item
+          v-for="item in itemsAdmin"
+          :key="item.title"
+          :to="item.link"
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -39,7 +45,9 @@
 
     <template>
       <div class="pa-2 mt-auto" v-if="isLogin">
-        <v-btn depressed color="black" dark block @click.prevent="onLogout">Logout</v-btn>
+        <v-btn depressed color="black" dark block @click.prevent="onLogout"
+          >Logout</v-btn
+        >
       </div>
     </template>
   </v-navigation-drawer>
@@ -59,7 +67,17 @@ export default {
       currentUser: null,
       items: [
         { title: "Home", icon: "mdi-view-dashboard", link: "/" },
-        { title: "Account", icon: "mdi-account-box-outline", link: "/account" }
+        { title: "Account", icon: "mdi-account-box-outline", link: "/account" },
+        {
+          title: "Cart",
+          icon: "mdi-cart",
+          link: "/cart"
+        },
+        {
+          title: "Transaction",
+          icon: "mdi-currency-usd",
+          link: "/transaction"
+        }
       ],
       itemsAdmin: [
         { title: "Home", icon: "mdi-view-dashboard", link: "/" },
@@ -67,6 +85,11 @@ export default {
           title: "Add Product",
           icon: "mdi-rocket",
           link: "/admin/add-product"
+        },
+        {
+          title: "Transaction",
+          icon: "mdi-currency-usd",
+          link: "/admin/transaction"
         },
         {
           title: "Edit Product",

@@ -8,7 +8,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: Home
   },
   {
     path: "/product",
@@ -22,21 +22,34 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "DetailProduct" */ "../views/DetailProduct.vue"
-          ),
-      },
-    ],
+          )
+      }
+    ]
+  },
+  {
+    path: "/transaction",
+    name: "CustomerTransaction",
+    component: () =>
+      import(
+        /* webpackChunkName: "CustomerTransaction" */ "../components/Transaction.vue"
+      )
   },
   {
     path: "/about",
     name: "About",
     component: () =>
-      import(/* webpackChunkName: "About" */ "../views/About.vue"),
+      import(/* webpackChunkName: "About" */ "../views/About.vue")
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import(/* webpackChunkName: "Cart" */ "../views/Cart.vue")
   },
   {
     path: "/contact",
     name: "Contact",
     component: () =>
-      import(/* webpackChunkName: "Contact" */ "../views/Contact.vue"),
+      import(/* webpackChunkName: "Contact" */ "../views/Contact.vue")
   },
   {
     path: "/admin",
@@ -45,12 +58,12 @@ const routes = [
       import(/* webpackChunkName: "AdminPage" */ "../views/AdminPage.vue"),
     children: [
       {
-        path: ":id",
-        name: "EditForm",
+        path: "transaction",
+        name: "AdminTransaction",
         component: () =>
           import(
-            /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
-          ),
+            /* webpackChunkName: "transaction" */ "../components/Transaction.vue"
+          )
       },
       {
         path: "add-product",
@@ -58,24 +71,24 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
-          ),
+          )
       },
       {
-        path: "transaction",
-        name: "Transaction",
+        path: ":id",
+        name: "EditForm",
         component: () =>
           import(
-            /* webpackChunkName: "transaction" */ "../components/Transaction.vue"
-          ),
-      },
-    ],
-  },
+            /* webpackChunkName: "ProductForm" */ "../components/ProductForm.vue"
+          )
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;
