@@ -69,6 +69,35 @@ export default {
         reject(err);
       });
     },
+    onUpdateProfile({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "/user/",
+          method: "PUT",
+          data: payload,
+          headers: {
+            token: localStorage.getItem("token")
+          }
+        })
+          .then(({ data }) => {
+            commit("SET_USER_INFO", data);
+            resolve(data);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
+    uploadImage({}, payload) {
+      return axios({
+        url: "/image",
+        method: "POST",
+        data: payload,
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      });
+    },
     getUserInfo({ commit }) {
       let token = localStorage.getItem("token");
       axios({

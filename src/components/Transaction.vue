@@ -15,12 +15,12 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">{{ data._id }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="headline mb-1">
+                {{
                 data.UserId.username
-              }}</v-list-item-title>
-              <v-list-item-subtitle
-                >Status : {{ data.status }}</v-list-item-subtitle
-              >
+                }}
+              </v-list-item-title>
+              <v-list-item-subtitle>Status : {{ data.status }}</v-list-item-subtitle>
               <v-simple-table class="grey lighten-2">
                 <template v-slot:default>
                   <thead>
@@ -62,27 +62,32 @@
             </v-list-item-avatar>
           </v-list-item>
           <v-card-actions>
-            <v-btn
-              color="red darken-3"
-              dark
-              v-if="data.status === 'unpaid' && role === 'customer'"
-              @click.prevent="updateToPaid(data._id)"
-              >Confirm</v-btn
-            >
+            <v-flex>
+              <v-file-input
+                v-model="imageTransfer"
+                small-chips
+                multiple
+                label="upload image proof of transfer"
+              ></v-file-input>
+              <v-btn
+                color="red darken-3"
+                dark
+                v-if="data.status === 'unpaid' && role === 'customer'"
+                @click.prevent="updateToPaid(data._id)"
+              >Confirm</v-btn>
+            </v-flex>
             <v-btn
               color="success"
               dark
               v-if="data.status === 'paid' && role === 'admin'"
               @click.prevent="updateToSent(data._id)"
-              >Sent Product</v-btn
-            >
+            >Sent Product</v-btn>
             <v-btn
               color="warning"
               dark
               v-if="data.status === 'sent' && role === 'customer'"
               @click.prevent="updateToReceived(data._id)"
-              >Received</v-btn
-            >
+            >Received</v-btn>
           </v-card-actions>
         </v-card>
       </c-vol>
@@ -96,7 +101,9 @@ import format from "rupiah-format";
 export default {
   name: "Transaction",
   data() {
-    return {};
+    return {
+      imageTransfer: []
+    };
   },
   methods: {
     getUserTransaction() {
@@ -117,7 +124,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
           this.getUserTransaction();
         })
@@ -131,7 +138,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
         });
     },
@@ -144,7 +151,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
           this.getAdminTransaction();
         })
@@ -158,7 +165,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
         });
     },
@@ -171,7 +178,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
           this.getUserTransaction();
         })
@@ -185,10 +192,10 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop",
+            position: "leftTop"
           });
         });
-    },
+    }
   },
   computed: {
     transaction() {
@@ -196,7 +203,7 @@ export default {
     },
     role() {
       return localStorage.getItem("role");
-    },
+    }
   },
   created() {
     let role = localStorage.getItem("role");
@@ -205,7 +212,7 @@ export default {
     } else {
       this.getUserTransaction();
     }
-  },
+  }
 };
 </script>
 
