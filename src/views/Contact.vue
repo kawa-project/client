@@ -19,19 +19,9 @@
             </v-col>
             <v-col lass="mx-auto my-3">
               <v-form ref="formSaran" @submit.prevent="onSubmit">
-                <v-text-field
-                  v-model="form.email"
-                  label="E-mail"
-                  required
-                  type="email"
-                ></v-text-field>
+                <v-text-field v-model="form.email" label="E-mail" required type="email"></v-text-field>
 
-                <v-text-field
-                  v-model="form.subject"
-                  label="Subject"
-                  required
-                  type="text"
-                ></v-text-field>
+                <v-text-field v-model="form.subject" label="Subject" required type="text"></v-text-field>
 
                 <v-textarea
                   v-model="form.message"
@@ -41,18 +31,14 @@
                   value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                 ></v-textarea>
 
-                <v-btn class="mr-4 brown darken-2" type="submit" dark>
-                  Submit
-                </v-btn>
+                <v-btn class="mr-4 brown darken-2" type="submit" dark>Submit Message</v-btn>
 
                 <v-btn
                   depressed
                   color="yellow darken-2"
                   class="mr-4"
                   @click="resetFormSaran"
-                >
-                  Reset Form
-                </v-btn>
+                >Reset Form</v-btn>
               </v-form>
             </v-col>
           </v-row>
@@ -64,7 +50,7 @@
               height="450"
               frameborder="0"
               style="border:0;"
-              allowfullscreen=""
+              allowfullscreen
             ></iframe>
           </v-flex>
         </v-col>

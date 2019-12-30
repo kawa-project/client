@@ -126,6 +126,30 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: () =>
+      import(/* webpackChunkName: "Account" */ "../views/Account.vue"),
+    meta: {
+      auth: false,
+      title: "Account | KawaCraft"
+    },
+    children: [
+      {
+        path: ":id",
+        name: "EditProfile",
+        component: () =>
+          import(
+            /* webpackChunkName: "EditProfile" */ "../components/EditProfile.vue"
+          ),
+        meta: {
+          auth: false,
+          title: "Edit Profile | KawaCraft"
+        }
+      }
+    ]
   }
 ];
 

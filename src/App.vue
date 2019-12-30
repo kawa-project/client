@@ -5,7 +5,7 @@
       <navbar-component />
       <v-content>
         <transition name="fadeWindow" mode="out-in">
-          <router-view @open-dialoglogin="openDialogLogin" />
+          <router-view />
         </transition>
       </v-content>
       <footer-component />
