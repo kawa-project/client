@@ -18,6 +18,7 @@
           dense
           v-on:change="fileHandle"
           ref="file"
+          loading
         >
           <template v-slot:selection="{ index, text }">
             <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
