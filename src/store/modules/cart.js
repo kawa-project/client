@@ -20,7 +20,6 @@ export default {
         },
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_CART", data);
         })
         .catch(err => {

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <c-vol cols="10" class="mx-auto">
+      <v-col cols="10" class="mx-auto">
         <h1 class="text-center">Transaction</h1>
         <v-card
           class="mx-auto card-style mt-4"
@@ -21,6 +21,22 @@
                 }}
               </v-list-item-title>
               <v-list-item-subtitle>Status : {{ data.status }}</v-list-item-subtitle>
+              <v-list-item-subtitle v-if="data.transfer !== 'none'">
+                Transfer Evidence :
+                <a
+                  :href="data.transfer"
+                  target="_blank"
+                  class="transaction-image"
+                >See Image</a>
+              </v-list-item-subtitle>
+              <v-list-item-subtitle v-if="data.receipt !== 'none'">
+                Transaction Receipt :
+                <a
+                  :href="data.receipt"
+                  target="_blank"
+                  class="transaction-image"
+                >Receipt</a>
+              </v-list-item-subtitle>
               <v-simple-table class="grey lighten-2">
                 <template v-slot:default>
                   <thead>
@@ -62,19 +78,25 @@
             </v-list-item-avatar>
           </v-list-item>
           <v-card-actions>
-            <v-flex>
+            <v-flex v-if="data.status === 'unpaid' && role === 'customer'">
               <v-file-input
                 v-model="imageTransfer"
                 small-chips
                 multiple
-                label="upload image proof of transfer"
+                label="upload image transfer"
+                v-on:change="fileTransfer"
               ></v-file-input>
-              <v-btn
-                color="red darken-3"
-                dark
-                v-if="data.status === 'unpaid' && role === 'customer'"
-                @click.prevent="updateToPaid(data._id)"
-              >Confirm</v-btn>
+              <v-btn color="red darken-3" dark @click.prevent="sentImageTransfer(data._id)">Upload</v-btn>
+            </v-flex>
+            <v-flex v-if="data.status === 'unconfirm' && role === 'admin'">
+              <v-file-input
+                v-model="receiptImage"
+                small-chips
+                multiple
+                label="send receipt"
+                v-on:change="fileReceipt"
+              ></v-file-input>
+              <v-btn color="gray darken-1" dark @click.prevent="sentReceipt(data._id)">Confirm</v-btn>
             </v-flex>
             <v-btn
               color="success"
@@ -90,7 +112,7 @@
             >Received</v-btn>
           </v-card-actions>
         </v-card>
-      </c-vol>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -102,7 +124,10 @@ export default {
   name: "Transaction",
   data() {
     return {
-      imageTransfer: []
+      imageTransfer: [],
+      receiptImage: [],
+      transfer: "",
+      receipt: ""
     };
   },
   methods: {
@@ -115,11 +140,11 @@ export default {
     convert(item) {
       return format.convert(item);
     },
-    updateToPaid(id) {
+    updateToUnconfirm(id) {
       this.$store
-        .dispatch("transaction/updateToPaid", id)
+        .dispatch("transaction/updateToUnconfirm", id)
         .then(({ data }) => {
-          this.$snotify.success(`Success update`, {
+          this.$snotify.success(`Image and Status has been updated`, {
             timeout: 1500,
             showProgressBar: true,
             closeOnClick: true,
@@ -127,6 +152,33 @@ export default {
             position: "leftTop"
           });
           this.getUserTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+        });
+    },
+    updateToPaid(id) {
+      this.$store
+        .dispatch("transaction/updateToPaid", id)
+        .then(({ data }) => {
+          this.$snotify.success(`Image and Status has been updated`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+          this.getAdminTransaction();
         })
         .catch(err => {
           let text = "";
@@ -154,6 +206,7 @@ export default {
             position: "leftTop"
           });
           this.getAdminTransaction();
+          this.$store.dispatch("transaction/getOneTransaction", id);
         })
         .catch(err => {
           let text = "";
@@ -181,6 +234,118 @@ export default {
             position: "leftTop"
           });
           this.getUserTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+        });
+    },
+    sentImageTransfer(id) {
+      let payload = {
+        id,
+        data: {
+          transfer: this.transfer
+        }
+      };
+      this.$store
+        .dispatch("transaction/uploadImageTransfer", payload)
+        .then(({ data }) => {
+          this.updateToUnconfirm(id);
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+        });
+    },
+    sentReceipt(id) {
+      let payload = {
+        id,
+        data: {
+          receipt: this.receipt
+        }
+      };
+      this.$store
+        .dispatch("transaction/uploadImageReceipt", payload)
+        .then(({ data }) => {
+          this.updateToPaid(id);
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+        });
+    },
+    fileTransfer() {
+      let formData = new FormData();
+      formData.append("image", this.imageTransfer[0]);
+      this.$store
+        .dispatch("transaction/uploadTransfer", formData)
+        .then(({ data }) => {
+          this.transfer = data.image;
+          this.$snotify.success(`Image has been uploaded`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+          this.getUserTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+        });
+    },
+    fileReceipt() {
+      let formData = new FormData();
+      formData.append("image", this.receiptImage[0]);
+      this.$store
+        .dispatch("transaction/uploadReceipt", formData)
+        .then(({ data }) => {
+          this.receipt = data.image;
+          this.$snotify.success(`Image has been uploaded`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop"
+          });
+          this.getAdminTransaction();
         })
         .catch(err => {
           let text = "";
@@ -229,5 +394,10 @@ export default {
 td {
   padding: 10px;
   text-align: center;
+}
+
+.transaction-image {
+  text-decoration: none;
+  color: blue;
 }
 </style>
