@@ -40,6 +40,12 @@ import format from "rupiah-format";
 
 export default {
   name: "Shoes",
+  data() {
+    return {
+      isLoading: false,
+      fullPage: true
+    };
+  },
   methods: {
     getAllProduct() {
       this.$store.dispatch("product/getAllProduct");
@@ -59,19 +65,19 @@ export default {
           showProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
-          position: "leftTop",
+          position: "leftTop"
         });
       }
-    },
+    }
   },
   computed: {
     fetchAllProduct() {
       return this.$store.state.product.allProduct;
-    },
+    }
   },
   created() {
     this.getAllProduct();
-  },
+  }
 };
 </script>
 
