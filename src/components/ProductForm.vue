@@ -264,7 +264,7 @@ export default {
     },
     deleteProduct() {
       let id = this.$route.params.id;
-      this.$snotify.confirm(`item: ${item.name}`, `Want Delete This?`, {
+      this.$snotify.confirm(`Want Delete This?`, {
         timeout: 5000,
         showProgressBar: true,
         closeOnClick: true,
