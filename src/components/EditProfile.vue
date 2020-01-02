@@ -35,7 +35,6 @@ export default {
       this.$store.dispatch("user/getUserInfo");
     },
     onUpdateProfile() {
-      console.log(this.avatar);
       let payload = {
         username: this.username,
         email: this.email,

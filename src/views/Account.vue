@@ -18,11 +18,7 @@
                   height="128"
                   width="128"
                 ></loading>
-                <v-img
-                  alt="photo-profile"
-                  :src="avatar"
-                  max-width="591"
-                ></v-img>
+                <v-img alt="photo-profile" :src="avatar" max-width="591"></v-img>
               </div>
               <v-file-input
                 v-if="$route.params.id"
@@ -41,19 +37,11 @@
                 ref="file"
               >
                 <template v-slot:selection="{ index, text }">
-                  <v-chip
-                    v-if="index < 2"
-                    color="deep-purple accent-4"
-                    dark
-                    label
-                    small
-                    >{{ text }}</v-chip
-                  >
+                  <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
                   <span
                     v-else-if="index === 2"
                     class="overline grey--text text--darken-3 mx-2"
-                    >+{{ files.length - 2 }} File(s)</span
-                  >
+                  >+{{ files.length - 2 }} File(s)</span>
                 </template>
               </v-file-input>
             </v-col>
@@ -62,27 +50,35 @@
               <div id="detail-profile" v-if="$route.path == '/account'">
                 <h2 color="black">
                   Username :
-                  <span style="font-size:20px; color:#015668;">{{
+                  <span style="font-size:20px; color:#015668;">
+                    {{
                     userInfo.username
-                  }}</span>
+                    }}
+                  </span>
                 </h2>
                 <h2 color="black" class="mt-3">
                   Email :
-                  <span style="font-size:20px; color:#015668;">{{
+                  <span style="font-size:20px; color:#015668;">
+                    {{
                     userInfo.email
-                  }}</span>
+                    }}
+                  </span>
                 </h2>
                 <h2 color="black" class="mt-3">
                   Address :
-                  <span style="font-size:20px; color:#015668;">{{
+                  <span style="font-size:20px; color:#015668;">
+                    {{
                     userInfo.address
-                  }}</span>
+                    }}
+                  </span>
                 </h2>
                 <h2 color="black" class="mt-3">
                   Phone :
-                  <span style="font-size:20px; color:#015668;">{{
+                  <span style="font-size:20px; color:#015668;">
+                    {{
                     userInfo.phone
-                  }}</span>
+                    }}
+                  </span>
                 </h2>
                 <v-btn
                   depressed
@@ -90,8 +86,7 @@
                   color="brown darken-4"
                   dark
                   @click.prevent="$router.push(`/account/${userInfo._id}`)"
-                  >Edit Profile</v-btn
-                >
+                >Edit Profile</v-btn>
               </div>
               <router-view :newavatar="avatar" />
             </v-col>
@@ -134,6 +129,7 @@ export default {
           this.isLoading = false;
         })
         .catch(err => {
+          this.isLoading = false;
           let text = "";
           err.response.data.errors.forEach(element => {
             text += element + ", ";

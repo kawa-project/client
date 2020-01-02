@@ -87,10 +87,9 @@
           </v-flex>
           <hr />
           <p
-            class="text-center font-weight-light my-3"
+            class="text-center font-weight-light my-3 mt-5"
             style="text-decoration:underline;"
           >Support your local Product 😊</p>
-          <hr />
         </v-col>
       </v-row>
     </v-container>

@@ -150,6 +150,16 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: "/howtoorder",
+    name: "HowToOrder",
+    component: () =>
+      import(/* webpackChunkName: "HowToOrder" */ "../views/HowToOrder.vue"),
+    meta: {
+      auth: false,
+      title: "How To Order | KawaCraft"
+    }
   }
 ];
 
