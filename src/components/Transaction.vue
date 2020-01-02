@@ -3,6 +3,8 @@
     <v-row>
       <v-col cols="10" class="mx-auto">
         <h1 class="text-center">Transaction</h1>
+
+        <v-img alt="photo-profile" :src="avatar" max-width="591"></v-img>
         <v-card
           class="mx-auto card-style mt-4"
           outlined
@@ -79,6 +81,15 @@
           </v-list-item>
           <v-card-actions>
             <v-flex v-if="data.status === 'unpaid' && role === 'customer'">
+              <loading
+                :active.sync="isLoading"
+                :can-cancel="false"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"
+                color="#007bff"
+                height="128"
+                width="128"
+              ></loading>
               <v-file-input
                 v-model="imageTransfer"
                 small-chips
@@ -89,6 +100,15 @@
               <v-btn color="red darken-3" dark @click.prevent="sentImageTransfer(data._id)">Upload</v-btn>
             </v-flex>
             <v-flex v-if="data.status === 'unconfirm' && role === 'admin'">
+              <loading
+                :active.sync="isLoading"
+                :can-cancel="false"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"
+                color="#007bff"
+                height="128"
+                width="128"
+              ></loading>
               <v-file-input
                 v-model="receiptImage"
                 small-chips
@@ -119,6 +139,8 @@
 
 <script>
 import format from "rupiah-format";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "Transaction",
@@ -127,8 +149,13 @@ export default {
       imageTransfer: [],
       receiptImage: [],
       transfer: "",
-      receipt: ""
+      receipt: "",
+      isLoading: false,
+      fullPage: true
     };
+  },
+  components: {
+    Loading
   },
   methods: {
     getUserTransaction() {
@@ -302,12 +329,14 @@ export default {
         });
     },
     fileTransfer() {
+      this.isLoading = true;
       let formData = new FormData();
       formData.append("image", this.imageTransfer[0]);
       this.$store
         .dispatch("transaction/uploadTransfer", formData)
         .then(({ data }) => {
           this.transfer = data.image;
+          this.isLoading = false;
           this.$snotify.success(`Image has been uploaded`, {
             timeout: 1500,
             showProgressBar: true,
@@ -318,6 +347,7 @@ export default {
           this.getUserTransaction();
         })
         .catch(err => {
+          this.isLoading = false;
           let text = "";
           err.response.data.errors.forEach(element => {
             text += element + ", ";
@@ -332,12 +362,14 @@ export default {
         });
     },
     fileReceipt() {
+      this.isLoading = true;
       let formData = new FormData();
       formData.append("image", this.receiptImage[0]);
       this.$store
         .dispatch("transaction/uploadReceipt", formData)
         .then(({ data }) => {
           this.receipt = data.image;
+          this.isLoading = false;
           this.$snotify.success(`Image has been uploaded`, {
             timeout: 1500,
             showProgressBar: true,
@@ -348,6 +380,7 @@ export default {
           this.getAdminTransaction();
         })
         .catch(err => {
+          this.isLoading = false;
           let text = "";
           err.response.data.errors.forEach(element => {
             text += element + ", ";
