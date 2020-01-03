@@ -111,12 +111,9 @@
                 @click.prevent="sentImageTransfer(data._id)"
                 >Upload</v-btn
               >
-<<<<<<< HEAD
-=======
               <p v-if="data.status === 'reject'" class="ml-3">
                 Please Upload Image with high quality
               </p>
->>>>>>> development
             </v-flex>
             <v-flex v-if="data.status === 'unconfirm' && role === 'admin'">
               <loading
@@ -136,15 +133,12 @@
                 v-on:change="fileReceipt"
               ></v-file-input>
               <v-btn
-<<<<<<< HEAD
-=======
                 color="red darken-1"
                 dark
                 @click.prevent="updateToReject(data._id)"
                 >Reject</v-btn
               >
               <v-btn
->>>>>>> development
                 color="gray darken-1"
                 dark
                 @click.prevent="sentReceipt(data._id)"
@@ -205,6 +199,33 @@ export default {
     },
     getDate(item) {
       return moment(item).format("LL");
+    },
+    updateToReject(id) {
+      this.$store
+        .dispatch("transaction/updateToReject", id)
+        .then(({ data }) => {
+          this.$snotify.success(`Transfer evidence has been rejected`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+          this.getAdminTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        });
     },
     updateToUnconfirm(id) {
       this.$store
@@ -363,9 +384,9 @@ export default {
           timeout: 3000,
           showProgressBar: true,
           closeOnClick: true,
-          pauseOnHoverleftTop",
-        });: true,
-          position: "
+          pauseOnHover: true,
+          position: "leftTop",
+        });
       } else {
         this.$store
           .dispatch("transaction/uploadImageReceipt", payload)
