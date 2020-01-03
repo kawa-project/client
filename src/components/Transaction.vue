@@ -83,7 +83,12 @@
             </v-list-item-avatar>
           </v-list-item>
           <v-card-actions>
-            <v-flex v-if="data.status === 'unpaid' && role === 'customer'">
+            <v-flex
+              v-if="
+                (data.status === 'unpaid' || data.status === 'reject') &&
+                  role === 'customer'
+              "
+            >
               <loading
                 :active.sync="isLoading"
                 :can-cancel="false"
@@ -106,6 +111,12 @@
                 @click.prevent="sentImageTransfer(data._id)"
                 >Upload</v-btn
               >
+<<<<<<< HEAD
+=======
+              <p v-if="data.status === 'reject'" class="ml-3">
+                Please Upload Image with high quality
+              </p>
+>>>>>>> development
             </v-flex>
             <v-flex v-if="data.status === 'unconfirm' && role === 'admin'">
               <loading
@@ -125,6 +136,15 @@
                 v-on:change="fileReceipt"
               ></v-file-input>
               <v-btn
+<<<<<<< HEAD
+=======
+                color="red darken-1"
+                dark
+                @click.prevent="updateToReject(data._id)"
+                >Reject</v-btn
+              >
+              <v-btn
+>>>>>>> development
                 color="gray darken-1"
                 dark
                 @click.prevent="sentReceipt(data._id)"
@@ -185,6 +205,36 @@ export default {
     },
     getDate(item) {
       return moment(item).format("LL");
+<<<<<<< HEAD
+=======
+    },
+    updateToReject(id) {
+      this.$store
+        .dispatch("transaction/updateToReject", id)
+        .then(({ data }) => {
+          this.$snotify.success(`Transfer evidence has been rejected`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+          this.getAdminTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        });
+>>>>>>> development
     },
     updateToUnconfirm(id) {
       this.$store
@@ -302,6 +352,7 @@ export default {
           transfer: this.transfer,
         },
       };
+<<<<<<< HEAD
       this.$store
         .dispatch("transaction/uploadImageTransfer", payload)
         .then(({ data }) => {
@@ -319,7 +370,36 @@ export default {
             pauseOnHover: true,
             position: "leftTop",
           });
+=======
+      if (this.imageTransfer.length === 0) {
+        this.$snotify.warning(`Please choose your file first`, {
+          timeout: 3000,
+          showProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          position: "leftTop",
+>>>>>>> development
         });
+      } else {
+        this.$store
+          .dispatch("transaction/uploadImageTransfer", payload)
+          .then(({ data }) => {
+            this.updateToUnconfirm(id);
+          })
+          .catch(err => {
+            let text = "";
+            err.response.data.errors.forEach(element => {
+              text += element + ", ";
+            });
+            this.$snotify.warning(`${text}`, {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              position: "leftTop",
+            });
+          });
+      }
     },
     sentReceipt(id) {
       let payload = {
@@ -328,6 +408,7 @@ export default {
           receipt: this.receipt,
         },
       };
+<<<<<<< HEAD
       this.$store
         .dispatch("transaction/uploadImageReceipt", payload)
         .then(({ data }) => {
@@ -345,7 +426,36 @@ export default {
             pauseOnHover: true,
             position: "leftTop",
           });
+=======
+      if (this.receiptImage.length === 0) {
+        this.$snotify.warning(`Please choose your file first`, {
+          timeout: 3000,
+          showProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          position: "leftTop",
+>>>>>>> development
         });
+      } else {
+        this.$store
+          .dispatch("transaction/uploadImageReceipt", payload)
+          .then(({ data }) => {
+            this.updateToPaid(id);
+          })
+          .catch(err => {
+            let text = "";
+            err.response.data.errors.forEach(element => {
+              text += element + ", ";
+            });
+            this.$snotify.warning(`${text}`, {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              position: "leftTop",
+            });
+          });
+      }
     },
     fileTransfer() {
       this.isLoading = true;
