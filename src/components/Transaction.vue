@@ -23,7 +23,7 @@
                 }}
               </v-list-item-title>
               <v-list-item-subtitle>Status : {{ data.status }}</v-list-item-subtitle>
-              <v-list-item-subtitle>Created : {{ data.createdAt }}</v-list-item-subtitle>
+              <v-list-item-subtitle>Created : {{ getDate(data.createdAt) }}</v-list-item-subtitle>
               <v-list-item-subtitle v-if="data.transfer !== 'none'">
                 Transfer Evidence :
                 <a
