@@ -23,6 +23,7 @@
                 }}
               </v-list-item-title>
               <v-list-item-subtitle>Status : {{ data.status }}</v-list-item-subtitle>
+              <v-list-item-subtitle>Created : {{ data.createdAt }}</v-list-item-subtitle>
               <v-list-item-subtitle v-if="data.transfer !== 'none'">
                 Transfer Evidence :
                 <a
@@ -141,6 +142,7 @@
 import format from "rupiah-format";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import moment from 'moment'
 
 export default {
   name: "Transaction",
@@ -166,6 +168,9 @@ export default {
     },
     convert(item) {
       return format.convert(item);
+    },
+    getDate(item){
+      return moment(item).format('LL')
     },
     updateToUnconfirm(id) {
       this.$store
