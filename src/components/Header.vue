@@ -13,7 +13,7 @@
               ></v-img>
               <p>Kawa Craft</p>
             </div>
-            <v-flex class="d-flex flex-row ml-auto mt-5">
+            <v-flex class="d-flex flex-row mt-5" style="margin-left:8%;">
               <div id="banner1">
                 <v-img
                   alt="banner"
