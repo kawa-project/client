@@ -174,5 +174,14 @@ export default {
           console.log(err);
         });
     },
+    updateToReject({ dispatch }, payload) {
+      return axios({
+        url: `/transaction/${payload}?reject=true`,
+        method: "PUT",
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+    },
   },
 };

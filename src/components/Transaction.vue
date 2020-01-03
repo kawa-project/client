@@ -3,8 +3,6 @@
     <v-row>
       <v-col cols="10" class="mx-auto">
         <h1 class="text-center">Transaction</h1>
-
-        <v-img alt="photo-profile" :src="avatar" max-width="591"></v-img>
         <v-card
           class="mx-auto card-style mt-4"
           outlined
@@ -18,19 +16,22 @@
             <v-list-item-content>
               <div class="overline mb-4">{{ data._id }}</div>
               <v-list-item-title class="headline mb-1">
-                {{
-                data.UserId.username
-                }}
+                {{ data.UserId.username }}
               </v-list-item-title>
-              <v-list-item-subtitle>Status : {{ data.status }}</v-list-item-subtitle>
-              <v-list-item-subtitle>Created : {{ getDate(data.createdAt) }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                >Status : {{ data.status }}</v-list-item-subtitle
+              >
+              <v-list-item-subtitle
+                >Created : {{ getDate(data.createdAt) }}</v-list-item-subtitle
+              >
               <v-list-item-subtitle v-if="data.transfer !== 'none'">
                 Transfer Evidence :
                 <a
                   :href="data.transfer"
                   target="_blank"
                   class="transaction-image"
-                >See Image</a>
+                  >See Image</a
+                >
               </v-list-item-subtitle>
               <v-list-item-subtitle v-if="data.receipt !== 'none'">
                 Transaction Receipt :
@@ -38,7 +39,8 @@
                   :href="data.receipt"
                   target="_blank"
                   class="transaction-image"
-                >Receipt</a>
+                  >Receipt</a
+                >
               </v-list-item-subtitle>
               <v-simple-table class="grey lighten-2">
                 <template v-slot:default>
@@ -81,7 +83,12 @@
             </v-list-item-avatar>
           </v-list-item>
           <v-card-actions>
-            <v-flex v-if="data.status === 'unpaid' && role === 'customer'">
+            <v-flex
+              v-if="
+                (data.status === 'unpaid' || data.status === 'reject') &&
+                  role === 'customer'
+              "
+            >
               <loading
                 :active.sync="isLoading"
                 :can-cancel="false"
@@ -98,7 +105,15 @@
                 label="upload image transfer"
                 v-on:change="fileTransfer"
               ></v-file-input>
-              <v-btn color="red darken-3" dark @click.prevent="sentImageTransfer(data._id)">Upload</v-btn>
+              <v-btn
+                color="red darken-3"
+                dark
+                @click.prevent="sentImageTransfer(data._id)"
+                >Upload</v-btn
+              >
+              <p v-if="data.status === 'reject'" class="ml-3">
+                Please Upload Image with high quality
+              </p>
             </v-flex>
             <v-flex v-if="data.status === 'unconfirm' && role === 'admin'">
               <loading
@@ -117,20 +132,33 @@
                 label="send receipt"
                 v-on:change="fileReceipt"
               ></v-file-input>
-              <v-btn color="gray darken-1" dark @click.prevent="sentReceipt(data._id)">Confirm</v-btn>
+              <v-btn
+                color="red darken-1"
+                dark
+                @click.prevent="updateToReject(data._id)"
+                >Reject</v-btn
+              >
+              <v-btn
+                color="gray darken-1"
+                dark
+                @click.prevent="sentReceipt(data._id)"
+                >Confirm</v-btn
+              >
             </v-flex>
             <v-btn
               color="success"
               dark
               v-if="data.status === 'paid' && role === 'admin'"
               @click.prevent="updateToSent(data._id)"
-            >Sent Product</v-btn>
+              >Sent Product</v-btn
+            >
             <v-btn
               color="warning"
               dark
               v-if="data.status === 'sent' && role === 'customer'"
               @click.prevent="updateToReceived(data._id)"
-            >Received</v-btn>
+              >Received</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -142,7 +170,7 @@
 import format from "rupiah-format";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   name: "Transaction",
@@ -153,11 +181,11 @@ export default {
       transfer: "",
       receipt: "",
       isLoading: false,
-      fullPage: true
+      fullPage: true,
     };
   },
   components: {
-    Loading
+    Loading,
   },
   methods: {
     getUserTransaction() {
@@ -169,46 +197,19 @@ export default {
     convert(item) {
       return format.convert(item);
     },
-    getDate(item){
-      return moment(item).format('LL')
+    getDate(item) {
+      return moment(item).format("LL");
     },
-    updateToUnconfirm(id) {
+    updateToReject(id) {
       this.$store
-        .dispatch("transaction/updateToUnconfirm", id)
+        .dispatch("transaction/updateToReject", id)
         .then(({ data }) => {
-          this.$snotify.success(`Image and Status has been updated`, {
+          this.$snotify.success(`Transfer evidence has been rejected`, {
             timeout: 1500,
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
-          });
-          this.getUserTransaction();
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop"
-          });
-        });
-    },
-    updateToPaid(id) {
-      this.$store
-        .dispatch("transaction/updateToPaid", id)
-        .then(({ data }) => {
-          this.$snotify.success(`Image and Status has been updated`, {
-            timeout: 1500,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.getAdminTransaction();
         })
@@ -222,7 +223,61 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
+          });
+        });
+    },
+    updateToUnconfirm(id) {
+      this.$store
+        .dispatch("transaction/updateToUnconfirm", id)
+        .then(({ data }) => {
+          this.$snotify.success(`Image and Status has been updated`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+          this.getUserTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        });
+    },
+    updateToPaid(id) {
+      this.$store
+        .dispatch("transaction/updateToPaid", id)
+        .then(({ data }) => {
+          this.$snotify.success(`Image and Status has been updated`, {
+            timeout: 1500,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+          this.getAdminTransaction();
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
           });
         });
     },
@@ -235,7 +290,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.getAdminTransaction();
           this.$store.dispatch("transaction/getOneTransaction", id);
@@ -250,7 +305,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
         });
     },
@@ -263,7 +318,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.getUserTransaction();
         })
@@ -277,7 +332,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
         });
     },
@@ -285,53 +340,73 @@ export default {
       let payload = {
         id,
         data: {
-          transfer: this.transfer
-        }
+          transfer: this.transfer,
+        },
       };
-      this.$store
-        .dispatch("transaction/uploadImageTransfer", payload)
-        .then(({ data }) => {
-          this.updateToUnconfirm(id);
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop"
-          });
+      if (this.imageTransfer.length === 0) {
+        this.$snotify.warning(`Please choose your file first`, {
+          timeout: 3000,
+          showProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          position: "leftTop",
         });
+      } else {
+        this.$store
+          .dispatch("transaction/uploadImageTransfer", payload)
+          .then(({ data }) => {
+            this.updateToUnconfirm(id);
+          })
+          .catch(err => {
+            let text = "";
+            err.response.data.errors.forEach(element => {
+              text += element + ", ";
+            });
+            this.$snotify.warning(`${text}`, {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              position: "leftTop",
+            });
+          });
+      }
     },
     sentReceipt(id) {
       let payload = {
         id,
         data: {
-          receipt: this.receipt
-        }
+          receipt: this.receipt,
+        },
       };
-      this.$store
-        .dispatch("transaction/uploadImageReceipt", payload)
-        .then(({ data }) => {
-          this.updateToPaid(id);
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop"
-          });
+      if (this.receiptImage.length === 0) {
+        this.$snotify.warning(`Please choose your file first`, {
+          timeout: 3000,
+          showProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          position: "leftTop",
         });
+      } else {
+        this.$store
+          .dispatch("transaction/uploadImageReceipt", payload)
+          .then(({ data }) => {
+            this.updateToPaid(id);
+          })
+          .catch(err => {
+            let text = "";
+            err.response.data.errors.forEach(element => {
+              text += element + ", ";
+            });
+            this.$snotify.warning(`${text}`, {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              position: "leftTop",
+            });
+          });
+      }
     },
     fileTransfer() {
       this.isLoading = true;
@@ -347,7 +422,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.getUserTransaction();
         })
@@ -362,7 +437,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
         });
     },
@@ -380,7 +455,7 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
           this.getAdminTransaction();
         })
@@ -395,10 +470,10 @@ export default {
             showProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
-            position: "leftTop"
+            position: "leftTop",
           });
         });
-    }
+    },
   },
   computed: {
     transaction() {
@@ -406,7 +481,7 @@ export default {
     },
     role() {
       return localStorage.getItem("role");
-    }
+    },
   },
   created() {
     let role = localStorage.getItem("role");
@@ -415,7 +490,7 @@ export default {
     } else {
       this.getUserTransaction();
     }
-  }
+  },
 };
 </script>
 
