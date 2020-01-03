@@ -205,36 +205,6 @@ export default {
     },
     getDate(item) {
       return moment(item).format("LL");
-<<<<<<< HEAD
-=======
-    },
-    updateToReject(id) {
-      this.$store
-        .dispatch("transaction/updateToReject", id)
-        .then(({ data }) => {
-          this.$snotify.success(`Transfer evidence has been rejected`, {
-            timeout: 1500,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop",
-          });
-          this.getAdminTransaction();
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop",
-          });
-        });
->>>>>>> development
     },
     updateToUnconfirm(id) {
       this.$store
