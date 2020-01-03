@@ -322,25 +322,6 @@ export default {
           transfer: this.transfer,
         },
       };
-<<<<<<< HEAD
-      this.$store
-        .dispatch("transaction/uploadImageTransfer", payload)
-        .then(({ data }) => {
-          this.updateToUnconfirm(id);
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop",
-          });
-=======
       if (this.imageTransfer.length === 0) {
         this.$snotify.warning(`Please choose your file first`, {
           timeout: 3000,
@@ -348,7 +329,6 @@ export default {
           closeOnClick: true,
           pauseOnHover: true,
           position: "leftTop",
->>>>>>> development
         });
       } else {
         this.$store
@@ -378,34 +358,14 @@ export default {
           receipt: this.receipt,
         },
       };
-<<<<<<< HEAD
-      this.$store
-        .dispatch("transaction/uploadImageReceipt", payload)
-        .then(({ data }) => {
-          this.updateToPaid(id);
-        })
-        .catch(err => {
-          let text = "";
-          err.response.data.errors.forEach(element => {
-            text += element + ", ";
-          });
-          this.$snotify.warning(`${text}`, {
-            timeout: 3000,
-            showProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "leftTop",
-          });
-=======
       if (this.receiptImage.length === 0) {
         this.$snotify.warning(`Please choose your file first`, {
           timeout: 3000,
           showProgressBar: true,
           closeOnClick: true,
-          pauseOnHover: true,
-          position: "leftTop",
->>>>>>> development
-        });
+          pauseOnHoverleftTop",
+        });: true,
+          position: "
       } else {
         this.$store
           .dispatch("transaction/uploadImageReceipt", payload)
