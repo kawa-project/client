@@ -19,9 +19,19 @@
             </v-col>
             <v-col lass="mx-auto my-3">
               <v-form ref="formSaran" @submit.prevent="onSubmit">
-                <v-text-field v-model="form.email" label="E-mail" required type="email"></v-text-field>
+                <v-text-field
+                  v-model="form.email"
+                  label="E-mail"
+                  required
+                  type="email"
+                ></v-text-field>
 
-                <v-text-field v-model="form.subject" label="Subject" required type="text"></v-text-field>
+                <v-text-field
+                  v-model="form.subject"
+                  label="Subject"
+                  required
+                  type="text"
+                ></v-text-field>
 
                 <v-textarea
                   v-model="form.message"
@@ -31,21 +41,24 @@
                   value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                 ></v-textarea>
 
-                <v-btn class="mr-4 brown darken-2" type="submit" dark>Submit Message</v-btn>
+                <v-btn class="mr-4 brown darken-2" type="submit" dark
+                  >Submit Message</v-btn
+                >
 
                 <v-btn
                   depressed
                   color="yellow darken-2"
                   class="mr-4"
                   @click="resetFormSaran"
-                >Reset Form</v-btn>
+                  >Reset Form</v-btn
+                >
               </v-form>
             </v-col>
           </v-row>
           <hr />
           <v-flex class="d-flex flex-row justify-center my-3">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.298867328605!2d107.6283346499371!3d-6.974022670201222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6285c5b7da517%3A0x864485f26a388f95!2sTelkom%20University!5e0!3m2!1sid!2sid!4v1577468869050!5m2!1sid!2sid"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.5018067120095!2d107.58739791455052!3d-6.949979394978816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e8c77b6151a3%3A0x212670ab89724cbf!2sJl.%20Sauyunan%20Mas%20Raya%20No.2e%2C%20Kb.%20Lega%2C%20Kec.%20Bojongloa%20Kidul%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040235!5e0!3m2!1sid!2sid!4v1578050315627!5m2!1sid!2sid"
               width="1000"
               height="450"
               frameborder="0"
@@ -67,31 +80,31 @@ export default {
       form: {
         email: "",
         subject: "",
-        message: ""
+        message: "",
       },
       desserts: [
         {
           name: "Call",
-          calories: "0811 2131 996"
+          calories: "0812 6392 1840",
         },
         {
           name: "SMS",
-          calories: "0811 2131 996"
+          calories: "0812 6392 1840",
         },
         {
           name: "Whatsapp",
-          calories: "0811 2131 996"
+          calories: "0811 2131 996",
         },
         {
           name: "Email",
-          calories: "fairenheito2000@gmail.com"
+          calories: "kawaleathercraft@gmail.com",
         },
         {
           name: "Office",
           calories:
-            "Jl. Telekomunikasi Jl. Terusan Buah Batu, Sukapura, Kec. Dayeuhkolot, Bandung, Jawa Barat 40257"
-        }
-      ]
+            "Jl. Sauyunan Mas Raya No.2e Kb. Lega Kec. Bojongloa Kidul, Kota Bandung, Jawa Barat 40235",
+        },
+      ],
     };
   },
   methods: {
@@ -99,10 +112,34 @@ export default {
       this.$refs.formSaran.reset();
     },
     onSubmit() {
-      alert(this.form);
+      let payload = this.form;
+      this.$store
+        .dispatch("user/contactUs", payload)
+        .then(({ data }) => {
+          this.$snotify.success(`Thanks for contact us`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        })
+        .catch(err => {
+          let text = "";
+          err.response.data.errors.forEach(element => {
+            text += element + ", ";
+          });
+          this.$snotify.warning(`${text}`, {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "leftTop",
+          });
+        });
       this.resetFormSaran();
-    }
-  }
+    },
+  },
 };
 </script>
 
