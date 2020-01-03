@@ -3,11 +3,11 @@ import axios from "@/api/axios";
 export default {
   state: {
     isLogin: false,
-    userInfo: null
+    userInfo: null,
   },
   getters: {
     isLogin: state => state.isLogin,
-    userInfo: state => state.userInfo
+    userInfo: state => state.userInfo,
   },
   mutations: {
     SET_LOGIN(state, payload) {
@@ -18,7 +18,7 @@ export default {
     },
     SET_USER_INFO(state, payload) {
       state.userInfo = payload;
-    }
+    },
   },
   actions: {
     onLogin({ commit, dispatch }, payload) {
@@ -26,7 +26,7 @@ export default {
         axios({
           method: "POST",
           url: "/user/login",
-          data: payload
+          data: payload,
         })
           .then(({ data }) => {
             localStorage.setItem("token", data.token);
@@ -51,8 +51,8 @@ export default {
             email: payload.email,
             password: payload.password,
             address: payload.address,
-            phone: payload.phone
-          }
+            phone: payload.phone,
+          },
         })
           .then(({ data }) => {
             resolve(data);
@@ -76,8 +76,8 @@ export default {
           method: "PUT",
           data: payload,
           headers: {
-            token: localStorage.getItem("token")
-          }
+            token: localStorage.getItem("token"),
+          },
         })
           .then(({ data }) => {
             commit("SET_USER_INFO", data);
@@ -94,8 +94,8 @@ export default {
         method: "POST",
         data: payload,
         headers: {
-          token: localStorage.getItem("token")
-        }
+          token: localStorage.getItem("token"),
+        },
       });
     },
     getUserInfo({ commit }) {
@@ -104,11 +104,18 @@ export default {
         method: "GET",
         url: "/user/",
         headers: {
-          token
-        }
+          token,
+        },
       }).then(({ data }) => {
         commit("SET_USER_INFO", data);
       });
-    }
-  }
+    },
+    contactUs({}, payload) {
+      return axios({
+        url: "/user/contact",
+        method: "POST",
+        data: payload,
+      });
+    },
+  },
 };
