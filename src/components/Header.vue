@@ -3,7 +3,7 @@
     <v-container class="px-0 py-3" style="height:200px;">
       <v-row justify="center">
         <v-col cols="6" class="mx-0">
-          <div id="header-left">
+          <div id="header-left" class="d-flex flex-row">
             <div id="logo-wrap" @click.prevent="$router.push('/')">
               <v-img
                 id="logo-nav"
@@ -13,6 +13,29 @@
               ></v-img>
               <p>Kawa Craft</p>
             </div>
+            <v-flex class="d-flex flex-row ml-auto mt-5">
+              <div id="banner1">
+                <v-img
+                  alt="banner"
+                  src="../assets/images/banner1.jpg"
+                  max-width="150"
+                ></v-img>
+              </div>
+              <div id="banner2">
+                <v-img
+                  alt="banner"
+                  src="../assets/images/banner2.jpg"
+                  max-width="150"
+                ></v-img>
+              </div>
+              <div id="banner3">
+                <v-img
+                  alt="banner"
+                  src="../assets/images/banner3.jpg"
+                  max-width="150"
+                ></v-img>
+              </div>
+            </v-flex>
           </div>
         </v-col>
         <v-col cols="4" class="mx-0">
@@ -67,12 +90,12 @@ import DialogSign from "@/components/DialogSign.vue";
 export default {
   name: "Header",
   components: {
-    "dialogsign-component": DialogSign,
+    "dialogsign-component": DialogSign
   },
   data() {
     return {
       dialoglogin: false,
-      dialogregister: false,
+      dialogregister: false
     };
   },
   methods: {
@@ -92,7 +115,7 @@ export default {
     },
     goToCart() {
       this.$router.push("/cart");
-    },
+    }
   },
   computed: {
     isLogin() {
@@ -100,8 +123,8 @@ export default {
     },
     totalCart() {
       return this.$store.state.cart.currentCart.length;
-    },
-  },
+    }
+  }
 };
 </script>
 

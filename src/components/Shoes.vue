@@ -21,6 +21,7 @@
               alt="sepatu"
               :src="product.image"
               max-width="446"
+              max-height="446"
             ></v-img>
           </a>
           <div id="title-sepatu">

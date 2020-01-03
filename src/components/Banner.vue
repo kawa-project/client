@@ -25,25 +25,23 @@
           </v-carousel>
         </v-col>
 
-        <v-col cols="10" v-if="$route.path == '/howtoorder'">
+        <v-col cols="10" v-if="$route.path == '/howtoorder'" class="mb-5">
           <h2>How To Order</h2>
-          <div id="cover-order">
-            <v-carousel
-              :show-arrows="true"
-              interval="5000"
-              :hide-delimiters="false"
-              hide-delimiter-background
-              height="auto"
-              style="transition:1s; border: 3px solid black;"
-            >
-              <v-carousel-item
-                style="transition-duration:1s; transition-timing-function: ease-in-out;"
-                v-for="(item, i) in howtoorder"
-                :key="i"
-                :src="item.src"
-              ></v-carousel-item>
-            </v-carousel>
-          </div>
+          <v-carousel
+            :show-arrows="true"
+            interval="5000"
+            :hide-delimiters="false"
+            hide-delimiter-background
+            style="transition:1s; border: 3px solid black; height:100%;"
+            height="100%"
+          >
+            <v-carousel-item
+              style="transition-duration:1s; transition-timing-function: ease-in-out;"
+              v-for="(item, i) in howtoorder"
+              :key="i"
+              :src="item.src"
+            ></v-carousel-item>
+          </v-carousel>
         </v-col>
       </v-row>
     </v-container>
@@ -57,15 +55,6 @@ export default {
     return {
       items: [
         {
-          src: "http://artapfootwear.com/wp-content/uploads/2018/06/1-001.jpg"
-        },
-        {
-          src: "http://artapfootwear.com/wp-content/uploads/2018/06/3-001.jpg"
-        },
-        {
-          src: "http://artapfootwear.com/wp-content/uploads/2018/06/4-001.jpg"
-        },
-        {
           src: "https://i.ibb.co/dgkdLgY/FOTO1.jpg"
         },
         {
@@ -73,6 +62,21 @@ export default {
         },
         {
           src: "https://imgur.com/cH4iFyO.jpg"
+        },
+        {
+          src: "https://imgur.com/FdxP4YZ.jpg"
+        },
+        {
+          src: "https://imgur.com/EyeXrjd.jpg"
+        },
+        {
+          src: "https://imgur.com/BE20kWT.jpg"
+        },
+        {
+          src: "https://imgur.com/xs5azSu.jpg"
+        },
+        {
+          src: "https://imgur.com/aBrLjoy.jpg"
         },
         {
           src: "https://imgur.com/Y00Qcq7.jpg"
@@ -119,4 +123,7 @@ export default {
 </script>
 
 <style scoped>
+#cover-order {
+  height: 100%;
+}
 </style>
