@@ -15,13 +15,10 @@
           <hr />
           <p class="text-center font-weight-light my-3">
             <span>
-              Kawa Craft adalah pemain baru dibidang produksi sepatu lifestyle
-              dengan tema workboots untuk laki-laki berbahan kulit pullup dan
-              crazy horse dengan kualitas terbaik. Kawa Berdiri pada tahun 2019
-              ,lebih tepatnya 20 Maret 2019 Kawa sendiri merupakan bahasa jepang
-              yang artinya kulit. Berslogan “ We Are The Craft of Our Towns “
-              yang mencitrakan Kawa sebagai pembuat kerajinan terbaik di Kota
-              Bandung.
+              Kawa Berdiri pada tahun 2019 ,lebih tepatnya 20 Maret 2019 Kawa
+              sendiri merupakan bahasa jepang yang artinya kulit. Berslogan “ We
+              Are The Craft of Our Towns “ yang mencitrakan Kawa sebagai pembuat
+              kerajinan terbaik di Kota Bandung.
             </span>
           </p>
           <hr />
@@ -46,50 +43,26 @@
             <v-img
               id="shoes"
               alt="img-about"
-              src="../assets/images/shoes1.jpg"
+              src="../assets/images/shoes1.jpeg"
               max-width="400"
               class="mr-5"
             ></v-img>
             <v-img
               id="shoes"
               alt="img-about"
-              src="../assets/images/shoes2.jpg"
+              src="../assets/images/shoes2.jpeg"
               max-width="400"
               class="ml-5"
             ></v-img>
           </v-flex>
           <hr />
-          <p class="text-center font-weight-light my-3">
-            Kawa memproduksi dua jenis produk / series , produk dengan bahan
-            kulit pull-up yang berwarna Tan dan coklat tua/ DarkBrown . Harga
-            per sepasang sepatu dijual sama yaitu Rp 550.000 .
-          </p>
-          <hr />
-          <v-flex class="d-flex flex-row justify-space-around">
-            <v-img
-              class="my-3 un-photo"
-              alt="img-about"
-              src="../assets/images/foto web/FOTO10.jpg"
-              max-width="300"
-            ></v-img>
-            <v-img
-              class="my-3"
-              alt="img-about"
-              src="../assets/images/foto web/FOTO11.jpg"
-              max-width="300"
-            ></v-img>
-            <v-img
-              class="my-3"
-              alt="img-about"
-              src="../assets/images/foto web/FOTO12.jpg"
-              max-width="300"
-            ></v-img>
-          </v-flex>
-          <hr />
+
           <p
             class="text-center font-weight-light my-3 mt-5"
             style="text-decoration:underline;"
-          >Support your local Product 😊</p>
+          >
+            Support your local Product 😊
+          </p>
         </v-col>
       </v-row>
     </v-container>

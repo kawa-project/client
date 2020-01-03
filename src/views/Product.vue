@@ -2,7 +2,11 @@
   <div class="Product">
     <v-container>
       <v-row>
-        <v-col v-if="$route.path == '/product'" cols="10" class="mx-auto text-left">
+        <v-col
+          v-if="$route.path == '/product'"
+          cols="10"
+          class="mx-auto text-left"
+        >
           <h2 id="label-product">Product</h2>
         </v-col>
       </v-row>
