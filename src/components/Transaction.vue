@@ -3,8 +3,6 @@
     <v-row>
       <v-col cols="10" class="mx-auto">
         <h1 class="text-center">Transaction</h1>
-
-        <v-img alt="photo-profile" :src="avatar" max-width="591"></v-img>
         <v-card
           class="mx-auto card-style mt-4"
           outlined
